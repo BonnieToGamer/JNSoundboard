@@ -10,12 +10,14 @@ namespace JNSoundboard
     {
         private IWavePlayer outputDevice;
         private readonly MixingSampleProvider mixer;
-        private IDictionary<string, CachedSound> cachedSounds = new Dictionary<string, CachedSound>();
+        private readonly IDictionary<string, CachedSound> cachedSounds = new Dictionary<string, CachedSound>();
 
         public AudioPlaybackEngine(int sampleRate = 44100, int channelCount = 2)
         {
-            mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, channelCount));
-            mixer.ReadFully = true;
+            mixer = new MixingSampleProvider(WaveFormat.CreateIeeeFloatWaveFormat(sampleRate, channelCount))
+            {
+                ReadFully = true
+            };
             mixer.MixerInputEnded += OnMixerInputEnded;
         }
 
@@ -35,8 +37,10 @@ namespace JNSoundboard
         {
             if (outputDevice != null) outputDevice.Dispose();
 
-            var output = new WaveOutEvent();
-            output.DeviceNumber = deviceNumber;
+            WaveOutEvent output = new WaveOutEvent
+            {
+                DeviceNumber = deviceNumber
+            };
             output.Init(mixer);
             output.Play();
 
@@ -45,19 +49,19 @@ namespace JNSoundboard
 
         public void PlaySound(string fileName, float volume = 1)
         {
-            var input = new AudioFileReader(fileName);
+            _ = new AudioFileReader(fileName);
 
-            CachedSound cachedSound = null;
 
-            if (!cachedSounds.TryGetValue(fileName, out cachedSound))
+            if (!cachedSounds.TryGetValue(fileName, out CachedSound cachedSound))
             {
                 cachedSound = new CachedSound(fileName);
                 cachedSounds.Add(fileName, cachedSound);
             }
 
-            var resultingSampleProvider = new VolumeSampleProvider(new CachedSoundSampleProvider(cachedSound));
-
-            resultingSampleProvider.Volume = volume;
+            VolumeSampleProvider resultingSampleProvider = new VolumeSampleProvider(new CachedSoundSampleProvider(cachedSound))
+            {
+                Volume = volume
+            };
 
             AddMixerInput(resultingSampleProvider);
         }
@@ -84,7 +88,7 @@ namespace JNSoundboard
 
         private void AddMixerInput(ISampleProvider input)
         {
-            var resampled = new WdlResamplingSampleProvider(input, mixer.WaveFormat.SampleRate);
+            WdlResamplingSampleProvider resampled = new WdlResamplingSampleProvider(input, mixer.WaveFormat.SampleRate);
             mixer.AddMixerInput(ConvertToRightChannelCount(resampled));
         }
 

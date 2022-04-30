@@ -15,7 +15,7 @@ namespace JNSoundboard
     {
         internal class ListViewItemComparer : IComparer
         {
-            private int col;
+            private readonly int col;
 
             public ListViewItemComparer()
             {
@@ -36,10 +36,10 @@ namespace JNSoundboard
         //There might be a smarter way to output the sound to two devices, but this is quick and it works.
 
         //Generally the virtual cable output
-        AudioPlaybackEngine playbackEngine1 = new AudioPlaybackEngine();
+        readonly AudioPlaybackEngine playbackEngine1 = new AudioPlaybackEngine();
 
         //A second output to also output the sound to your headphones or speaker.
-        AudioPlaybackEngine playbackEngine2 = new AudioPlaybackEngine();
+        readonly AudioPlaybackEngine playbackEngine2 = new AudioPlaybackEngine();
 
         //Linear volume for sounds sent to AudioPlaybackEngine (doesn't affect microphone loopback volume)
         private float soundVolume;
@@ -91,8 +91,7 @@ namespace JNSoundboard
         WaveIn loopbackSourceStream = null;
         BufferedWaveProvider loopbackWaveProvider = null;
         WaveOut loopbackWaveOut = null;
-
-        Random rand = new Random();
+        readonly Random rand = new Random();
 
         const string DO_NOT_USE = "[Do not use]";
 
@@ -127,7 +126,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
         {
             InitializeComponent();
 
-            var tooltip = new ToolTip();
+            ToolTip tooltip = new ToolTip();
 
             tooltip.SetToolTip(btnReloadDevices, "Refresh sound devices");
             tooltip.SetToolTip(btnReloadWindows, "Reload windows");
@@ -146,10 +145,10 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             DisableCheckboxChangeEvents();
             DisableSoundVolumeChangeEvents();
 
-            loadSoundDevices(false); //false argument keeps device change events disabled
+            LoadSoundDevices(false); //false argument keeps device change events disabled
 
-            Helper.getWindows(cbWindows);
-            Helper.selectWindow(cbWindows, XMLSettings.soundboardSettings.AutoPushToTalkWindow);
+            Helper.GetWindows(cbWindows);
+            Helper.SelectWindow(cbWindows, XMLSettings.soundboardSettings.AutoPushToTalkWindow);
 
             if (XMLSettings.soundboardSettings.StartMinimised)
             {
@@ -161,14 +160,14 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                 }
             }
 
-            Helper.setStartup(XMLSettings.soundboardSettings.StartWithWindows);
+            Helper.SetStartup(XMLSettings.soundboardSettings.StartWithWindows);
 
             cbEnableHotkeys.Checked = XMLSettings.soundboardSettings.EnableHotkeys;
             cbEnableLoopback.Checked = XMLSettings.soundboardSettings.EnableLoopback;
 
             soundVolume = XMLSettings.soundboardSettings.SoundVolume;
             vsSoundVolume.Volume = soundVolume;
-            nSoundVolume.Value = Helper.linearVolumeToInteger(vsSoundVolume.Volume); //needed because change events are still disabled
+            nSoundVolume.Value = Helper.LinearVolumeToInteger(vsSoundVolume.Volume); //needed because change events are still disabled
 
             pushToTalkKey = XMLSettings.soundboardSettings.AutoPushToTalkKey;
 
@@ -181,7 +180,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             if (File.Exists(XMLSettings.soundboardSettings.LastXMLFile))
             {
                 //loadXMLFile() returns true if error occurred
-                if (loadXMLFile(XMLSettings.soundboardSettings.LastXMLFile))
+                if (LoadXMLFile(XMLSettings.soundboardSettings.LastXMLFile))
                 {
                     XMLSettings.soundboardSettings.LastXMLFile = "";
                     XMLSettings.SaveSoundboardSettingsXML();
@@ -194,9 +193,9 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             EnableDeviceChangeEvents();
 
             mainTimer.Enabled = cbEnableHotkeys.Checked;
-            initAudioPlaybackEngine1();
-            initAudioPlaybackEngine2();
-            restartLoopback();
+            InitAudioPlaybackEngine1();
+            InitAudioPlaybackEngine2();
+            RestartLoopback();
 
             //When sound stops, fire event which lets go of push-to-talk key.
             playbackEngine1.AllInputEnded += OnAllInputEnded;
@@ -210,42 +209,42 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
 
         private void DisableCheckboxChangeEvents()
         {
-            cbEnableHotkeys.CheckedChanged -= cbEnableHotkeys_CheckedChanged;
-            cbEnableLoopback.CheckedChanged -= cbEnableLoopback_CheckedChanged;
-            cbEnablePushToTalk.CheckedChanged -= cbEnablePushToTalk_CheckedChanged;
+            cbEnableHotkeys.CheckedChanged -= CbEnableHotkeys_CheckedChanged;
+            cbEnableLoopback.CheckedChanged -= CbEnableLoopback_CheckedChanged;
+            cbEnablePushToTalk.CheckedChanged -= CbEnablePushToTalk_CheckedChanged;
         }
 
         private void EnableCheckboxChangeEvents()
         {
-            cbEnableHotkeys.CheckedChanged += cbEnableHotkeys_CheckedChanged;
-            cbEnableLoopback.CheckedChanged += cbEnableLoopback_CheckedChanged;
-            cbEnablePushToTalk.CheckedChanged += cbEnablePushToTalk_CheckedChanged;
+            cbEnableHotkeys.CheckedChanged += CbEnableHotkeys_CheckedChanged;
+            cbEnableLoopback.CheckedChanged += CbEnableLoopback_CheckedChanged;
+            cbEnablePushToTalk.CheckedChanged += CbEnablePushToTalk_CheckedChanged;
         }
 
         private void DisableSoundVolumeChangeEvents()
         {
-            vsSoundVolume.VolumeChanged -= vsSoundVolume_VolumeChanged;
-            nSoundVolume.ValueChanged -= nSoundVolume_ValueChanged;
+            vsSoundVolume.VolumeChanged -= VsSoundVolume_VolumeChanged;
+            nSoundVolume.ValueChanged -= NSoundVolume_ValueChanged;
         }
 
         private void EnableSoundVolumeChangeEvents()
         {
-            vsSoundVolume.VolumeChanged += vsSoundVolume_VolumeChanged;
-            nSoundVolume.ValueChanged += nSoundVolume_ValueChanged;
+            vsSoundVolume.VolumeChanged += VsSoundVolume_VolumeChanged;
+            nSoundVolume.ValueChanged += NSoundVolume_ValueChanged;
         }
 
         private void DisableDeviceChangeEvents()
         {
-            cbPlaybackDevices1.SelectedIndexChanged -= cbPlaybackDevices1_SelectedIndexChanged;
-            cbPlaybackDevices2.SelectedIndexChanged -= cbPlaybackDevices2_SelectedIndexChanged;
-            cbLoopbackDevices.SelectedIndexChanged -= cbLoopbackDevices_SelectedIndexChanged;
+            cbPlaybackDevices1.SelectedIndexChanged -= CbPlaybackDevices1_SelectedIndexChanged;
+            cbPlaybackDevices2.SelectedIndexChanged -= CbPlaybackDevices2_SelectedIndexChanged;
+            cbLoopbackDevices.SelectedIndexChanged -= CbLoopbackDevices_SelectedIndexChanged;
         }
 
         private void EnableDeviceChangeEvents()
         {
-            cbPlaybackDevices1.SelectedIndexChanged += cbPlaybackDevices1_SelectedIndexChanged;
-            cbPlaybackDevices2.SelectedIndexChanged += cbPlaybackDevices2_SelectedIndexChanged;
-            cbLoopbackDevices.SelectedIndexChanged += cbLoopbackDevices_SelectedIndexChanged;
+            cbPlaybackDevices1.SelectedIndexChanged += CbPlaybackDevices1_SelectedIndexChanged;
+            cbPlaybackDevices2.SelectedIndexChanged += CbPlaybackDevices2_SelectedIndexChanged;
+            cbLoopbackDevices.SelectedIndexChanged += CbLoopbackDevices_SelectedIndexChanged;
         }
 
         private void OnAllInputEnded(object sender, EventArgs e)
@@ -253,11 +252,11 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             if (keyUpPushToTalkKey)
             {
                 keyUpPushToTalkKey = false;
-                Keyboard.sendKey(pushToTalkKey, false);
+                Keyboard.SendKey(pushToTalkKey, false);
             }
         }
 
-        private void initAudioPlaybackEngine1()
+        private void InitAudioPlaybackEngine1()
         {
             try
             {
@@ -278,7 +277,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void initAudioPlaybackEngine2()
+        private void InitAudioPlaybackEngine2()
         {
             //Don't init if the null entry is selected
             if (SelectedPlaybackDevice2 >= 0)
@@ -303,12 +302,12 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void loadSoundDevices(bool enableEvents = true)
+        private void LoadSoundDevices(bool enableEvents = true)
         {
             DisableDeviceChangeEvents(); //avoid audio related errors
 
-            var playbackSources = new List<WaveOutCapabilities>();
-            var loopbackSources = new List<WaveInCapabilities>();
+            List<WaveOutCapabilities> playbackSources = new List<WaveOutCapabilities>();
+            List<WaveInCapabilities> loopbackSources = new List<WaveInCapabilities>();
 
             for (int i = 0; i < WaveOut.DeviceCount; i++)
             {
@@ -324,7 +323,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             cbPlaybackDevices2.Items.Clear();
             cbLoopbackDevices.Items.Clear();
 
-            foreach (var source in playbackSources)
+            foreach (WaveOutCapabilities source in playbackSources)
             {
                 cbPlaybackDevices1.Items.Add(source.ProductName);
                 cbPlaybackDevices2.Items.Add(source.ProductName);
@@ -346,7 +345,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                 SelectedPlaybackDevice2 = -1;
             }
 
-            foreach (var source in loopbackSources)
+            foreach (WaveInCapabilities source in loopbackSources)
             {
                 cbLoopbackDevices.Items.Add(source.ProductName);
             }
@@ -363,9 +362,9 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             if (cbLoopbackDevices.Items.Contains(XMLSettings.soundboardSettings.LastLoopbackDevice)) cbLoopbackDevices.SelectedItem = XMLSettings.soundboardSettings.LastLoopbackDevice;
         }
 
-        private void restartLoopback()
+        private void RestartLoopback()
         {
-            stopLoopback();
+            StopLoopback();
 
             //Subtract one from index to account for null entry.
             int deviceNumber = cbLoopbackDevices.SelectedIndex - 1;
@@ -378,10 +377,12 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                 loopbackSourceStream.WaveFormat = new WaveFormat(44100, WaveIn.GetCapabilities(deviceNumber).Channels);
                 loopbackSourceStream.BufferMilliseconds = 25;
                 loopbackSourceStream.NumberOfBuffers = 5;
-                loopbackSourceStream.DataAvailable += loopbackSourceStream_DataAvailable;
+                loopbackSourceStream.DataAvailable += LoopbackSourceStream_DataAvailable;
 
-                loopbackWaveProvider = new BufferedWaveProvider(loopbackSourceStream.WaveFormat);
-                loopbackWaveProvider.DiscardOnBufferOverflow = true;
+                loopbackWaveProvider = new BufferedWaveProvider(loopbackSourceStream.WaveFormat)
+                {
+                    DiscardOnBufferOverflow = true
+                };
 
                 if (loopbackWaveOut == null)
                     loopbackWaveOut = new WaveOut();
@@ -394,7 +395,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void stopLoopback()
+        private void StopLoopback()
         {
             try
             {
@@ -421,15 +422,15 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             catch (Exception) { }
         }
 
-        private void stopPlayback()
+        private void StopPlayback()
         {
             playbackEngine1.StopAllSounds();
             playbackEngine2.StopAllSounds();
         }
 
-        private void playSound(string file, float soundVolume)
+        private void PlaySound(string file, float soundVolume)
         {
-            stopPlayback();
+            StopPlayback();
 
             try
             {
@@ -459,7 +460,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private bool loadXMLFile(string path)
+        private bool LoadXMLFile(string path)
         {
             bool errorOccurred = true;
 
@@ -469,7 +470,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                 
                 if (s != null && s.SoundHotkeys != null && s.SoundHotkeys.Length > 0)
                 {
-                    var items = new List<ListViewItem>();
+                    List<ListViewItem> items = new List<ListViewItem>();
                     string errorMessage = "";
                     string sameKeys = "";
 
@@ -494,7 +495,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                             errorMessage += "Entry #" + (i + 1).ToString() + " has an error: " + tempErr + "\r\n";
                         }
 
-                        string keys = (kLength < 1 ? "" : Helper.keysArrayToString(s.SoundHotkeys[i].Keys));
+                        string keys = (kLength < 1 ? "" : Helper.KeysArrayToString(s.SoundHotkeys[i].Keys));
 
                         if (keys != "" && items.Count > 0 && items[items.Count - 1].Text == keys && !sameKeys.Contains(keys))
                         {
@@ -502,15 +503,15 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                         }
 
                         string windowString = string.IsNullOrWhiteSpace(s.SoundHotkeys[i].WindowTitle) ? "" : s.SoundHotkeys[i].WindowTitle;
-                        string volumeString = s.SoundHotkeys[i].SoundVolume == 1 ? "" : Helper.linearVolumeToString(s.SoundHotkeys[i].SoundVolume);
-                        string soundLocations = sLength < 1 ? "" : Helper.fileLocationsArrayToString(s.SoundHotkeys[i].SoundLocations);
+                        string volumeString = s.SoundHotkeys[i].SoundVolume == 1 ? "" : Helper.LinearVolumeToString(s.SoundHotkeys[i].SoundVolume);
+                        string soundLocations = sLength < 1 ? "" : Helper.FileLocationsArrayToString(s.SoundHotkeys[i].SoundLocations);
 
-                        var temp = new ListViewItem(keys);
+                        ListViewItem temp = new ListViewItem(keys);
                         temp.SubItems.Add(volumeString);
                         temp.SubItems.Add(windowString);
                         temp.SubItems.Add(soundLocations);
 
-                        temp.ToolTipText = Helper.getFileNamesTooltip(s.SoundHotkeys[i].SoundLocations); //blank tooltips are not displayed
+                        temp.ToolTipText = Helper.GetFileNamesTooltip(s.SoundHotkeys[i].SoundLocations); //blank tooltips are not displayed
 
                         items.Add(temp); //add even if there was an error, so that the user can fix within the app
                     }
@@ -537,7 +538,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                         lvKeySounds.Items.Clear();
                         lvKeySounds.Items.AddRange(items.ToArray());
 
-                        sortHotkeys();
+                        SortHotkeys();
 
                         xmlLocation = path;
                     }
@@ -561,7 +562,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             return errorOccurred;
         }
 
-        public void sortHotkeys()
+        public void SortHotkeys()
         {
             lvKeySounds.ListViewItemSorter = new ListViewItemComparer(0);
             lvKeySounds.Sort();
@@ -571,26 +572,26 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                 if (x.Keys == null && y.Keys == null) return 0;
                 else if (x.Keys == null) return -1;
                 else if (y.Keys == null) return 1;
-                else return Helper.keysArrayToString(x.Keys).CompareTo(Helper.keysArrayToString(y.Keys));
+                else return Helper.KeysArrayToString(x.Keys).CompareTo(Helper.KeysArrayToString(y.Keys));
             });
 
             lvKeySounds.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             lvKeySounds.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
 
-        private void editSelectedSoundHotkey()
+        private void EditSelectedSoundHotkey()
         {
             if (lvKeySounds.SelectedItems.Count > 0)
             {
-                var form = new AddEditHotkeyForm();
+                AddEditHotkeyForm form = new AddEditHotkeyForm();
 
                 int selectedIndex = lvKeySounds.SelectedIndices[0];
 
                 form.editStrings = new string[4];
 
-                form.editStrings[0] = Helper.keysArrayToString(soundHotkeys[selectedIndex].Keys);
+                form.editStrings[0] = Helper.KeysArrayToString(soundHotkeys[selectedIndex].Keys);
                 form.editStrings[1] = soundHotkeys[selectedIndex].WindowTitle;
-                form.editStrings[2] = Helper.fileLocationsArrayToString(soundHotkeys[selectedIndex].SoundLocations);
+                form.editStrings[2] = Helper.FileLocationsArrayToString(soundHotkeys[selectedIndex].SoundLocations);
                 form.editVolume = soundHotkeys[selectedIndex].SoundVolume;
 
                 form.editIndex = lvKeySounds.SelectedIndices[0];
@@ -599,42 +600,42 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void loopbackSourceStream_DataAvailable(object sender, WaveInEventArgs e)
+        private void LoopbackSourceStream_DataAvailable(object sender, WaveInEventArgs e)
         {
             if (loopbackWaveProvider != null && loopbackWaveProvider.BufferedDuration.TotalMilliseconds <= 100)
                 loopbackWaveProvider.AddSamples(e.Buffer, 0, e.BytesRecorded);
         }
 
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new SettingsForm();
+            SettingsForm form = new SettingsForm();
             form.ShowDialog();
         }
 
-        private void texttospeechToolStripMenuItem_Click(object sender, EventArgs e)
+        private void TexttospeechToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new TextToSpeechForm();
+            TextToSpeechForm form = new TextToSpeechForm();
             form.ShowDialog();
         }
 
-        private void checkForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CheckForUpdateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //Jitnaught is inactive, so let's have some fun here 
             Process.Start("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
-            var form = new AddEditHotkeyForm();
+            AddEditHotkeyForm form = new AddEditHotkeyForm();
             form.ShowDialog();
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
-            editSelectedSoundHotkey();
+            EditSelectedSoundHotkey();
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void BtnRemove_Click(object sender, EventArgs e)
         {
             if (lvKeySounds.SelectedItems.Count > 0 && MessageBox.Show("Are you sure remove that item?", "Remove", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -645,7 +646,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void btnClear_Click(object sender, EventArgs e)
+        private void BtnClear_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure you want to clear all items?", "Clear", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -656,35 +657,36 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void btnPlaySound_Click(object sender, EventArgs e)
+        private void BtnPlaySound_Click(object sender, EventArgs e)
         {
-            if (lvKeySounds.SelectedItems.Count > 0) playKeySound(soundHotkeys[lvKeySounds.SelectedIndices[0]]);
+            if (lvKeySounds.SelectedItems.Count > 0) PlayKeySound(soundHotkeys[lvKeySounds.SelectedIndices[0]]);
         }
 
-        private void btnStopAllSounds_Click(object sender, EventArgs e)
+        private void BtnStopAllSounds_Click(object sender, EventArgs e)
         {
-            stopPlayback();
+            StopPlayback();
         }
 
-        private void btnLoad_Click(object sender, EventArgs e)
+        private void BtnLoad_Click(object sender, EventArgs e)
         {
-            var diag = new OpenFileDialog();
+            OpenFileDialog diag = new OpenFileDialog
+            {
+                Filter = "XML file containing keys and sounds|*.xml"
+            };
 
-            diag.Filter = "XML file containing keys and sounds|*.xml";
-
-            var result = diag.ShowDialog();
+            DialogResult result = diag.ShowDialog();
 
             if (result == DialogResult.OK)
             {
                 string path = diag.FileName;
 
                 //loading hotkeys file and saving soundboard settings
-                XMLSettings.soundboardSettings.LastXMLFile = loadXMLFile(path) ? "" : path;
-                saveSettings();
+                XMLSettings.soundboardSettings.LastXMLFile = LoadXMLFile(path) ? "" : path;
+                SaveSettings();
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(xmlLocation))
             {
@@ -696,7 +698,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void btnSaveAs_Click(object sender, EventArgs e)
+        private void BtnSaveAs_Click(object sender, EventArgs e)
         {
             SaveHotkeysAs();
         }
@@ -706,14 +708,14 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             XMLSettings.WriteXML(new XMLSettings.Settings() { SoundHotkeys = soundHotkeys.ToArray() }, xmlLocation);
 
             XMLSettings.soundboardSettings.LastXMLFile = xmlLocation;
-            saveSettings();
+            SaveSettings();
 
             MessageBox.Show("Hotkeys saved");
         }
 
         private void SaveHotkeysAs()
         {
-            string path = Helper.userGetXmlLocation();
+            string path = Helper.UserGetXmlLocation();
 
             if (string.IsNullOrWhiteSpace(path))
             {
@@ -726,40 +728,40 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void btnReloadDevices_Click(object sender, EventArgs e)
+        private void BtnReloadDevices_Click(object sender, EventArgs e)
         {
-            stopPlayback();
-            stopLoopback();
+            StopPlayback();
+            StopLoopback();
 
-            loadSoundDevices();
+            LoadSoundDevices();
         }
 
-        private void cbEnableHotkeys_CheckedChanged(object sender, EventArgs e)
+        private void CbEnableHotkeys_CheckedChanged(object sender, EventArgs e)
         {
             mainTimer.Enabled = cbEnableHotkeys.Checked;
 
             XMLSettings.soundboardSettings.EnableHotkeys = cbEnableHotkeys.Checked;
-            saveSettings();
+            SaveSettings();
         }
 
-        private void cbEnableLoopback_CheckedChanged(object sender, EventArgs e)
+        private void CbEnableLoopback_CheckedChanged(object sender, EventArgs e)
         {
-            restartLoopback();
+            RestartLoopback();
 
             XMLSettings.soundboardSettings.EnableLoopback = cbEnableLoopback.Checked;
-            saveSettings();
+            SaveSettings();
         }
 
-        private void lvKeySounds_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void LvKeySounds_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            editSelectedSoundHotkey();
+            EditSelectedSoundHotkey();
         }
 
 
         Keyboard.Keys[] keysJustPressed = null;
         bool showingMsgBox = false;
         int lastIndex = -1;
-        private void mainTimer_Tick(object sender, EventArgs e)
+        private void MainTimer_Tick(object sender, EventArgs e)
         {
             if (cbEnableHotkeys.Checked)
             {
@@ -775,7 +777,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
 
                         if (soundHotkeys[i].Keys.Length == 0) continue;
 
-                        if (soundHotkeys[i].WindowTitle != "" && !Helper.isForegroundWindow(foregroundWindow, soundHotkeys[i].WindowTitle)) continue;
+                        if (soundHotkeys[i].WindowTitle != "" && !Helper.IsForegroundWindow(foregroundWindow, soundHotkeys[i].WindowTitle)) continue;
 
                         for (int j = 0; j < soundHotkeys[i].Keys.Length; j++)
                         {
@@ -791,14 +793,14 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                                 && soundHotkeys[i].SoundLocations.Length > 0 && soundHotkeys[i].SoundLocations.Any(x => File.Exists(x)))
                             {
                                 if (cbEnablePushToTalk.Checked && !keyUpPushToTalkKey && !Keyboard.IsKeyDown(pushToTalkKey)
-                                    && (cbWindows.SelectedIndex == 0 || Helper.isForegroundWindow(cbWindows.Text)))
+                                    && (cbWindows.SelectedIndex == 0 || Helper.IsForegroundWindow(cbWindows.Text)))
                                 {
                                     keyUpPushToTalkKey = true;
-                                    bool result = Keyboard.sendKey(pushToTalkKey, true);
+                                    bool result = Keyboard.SendKey(pushToTalkKey, true);
                                     Thread.Sleep(100);
                                 }
 
-                                playKeySound(soundHotkeys[i]);
+                                PlayKeySound(soundHotkeys[i]);
                                 return;
                             }
                         }
@@ -820,7 +822,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                     {
                         if (keysJustPressed == null || !keysJustPressed.Intersect(XMLSettings.soundboardSettings.StopSoundKeys).Any())
                         {
-                            stopPlayback();
+                            StopPlayback();
 
                             keysJustPressed = XMLSettings.soundboardSettings.StopSoundKeys;
 
@@ -856,7 +858,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                                 {
                                     keysJustPressed = XMLSettings.soundboardSettings.LoadXMLFiles[i].Keys;
 
-                                    loadXMLFile(XMLSettings.soundboardSettings.LoadXMLFiles[i].XMLLocation);
+                                    LoadXMLFile(XMLSettings.soundboardSettings.LoadXMLFiles[i].XMLLocation);
                                 }
 
                                 return;
@@ -875,17 +877,17 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                 {
                     if (!Keyboard.IsKeyDown(pushToTalkKey)) keyUpPushToTalkKey = false;
 
-                    if (cbWindows.SelectedIndex > 0 && !Helper.isForegroundWindow(cbWindows.Text))
+                    if (cbWindows.SelectedIndex > 0 && !Helper.IsForegroundWindow(cbWindows.Text))
                     {
                         keyUpPushToTalkKey = false;
-                        Keyboard.sendKey(pushToTalkKey, false);
-                        Keyboard.sendKey(pushToTalkKey, false);
+                        Keyboard.SendKey(pushToTalkKey, false);
+                        Keyboard.SendKey(pushToTalkKey, false);
                     }
                 }
             }
         }
 
-        private void playKeySound(XMLSettings.SoundHotkey currentKeysSounds)
+        private void PlayKeySound(XMLSettings.SoundHotkey currentKeysSounds)
         {
             Environment.CurrentDirectory = Path.GetDirectoryName(Application.ExecutablePath);
 
@@ -918,11 +920,11 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                 //use custom sound volume if the user changed it
                 if (customSoundVolume < 1)
                 {
-                    playSound(path, customSoundVolume);
+                    PlaySound(path, customSoundVolume);
                 }
                 else
                 {
-                    playSound(path, soundVolume);
+                    PlaySound(path, soundVolume);
                 }
 
                 keysJustPressed = currentKeysSounds.Keys;
@@ -936,56 +938,56 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void cbLoopbackDevices_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbLoopbackDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbEnableLoopback.Checked) //start loopback on new device, or stop loopback
             {
-                restartLoopback();
+                RestartLoopback();
             }
 
             string deviceName = (string)cbLoopbackDevices.SelectedItem;
 
             XMLSettings.soundboardSettings.LastLoopbackDevice = deviceName;
-            saveSettings();
+            SaveSettings();
         }
 
-        private void cbPlaybackDevices1_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbPlaybackDevices1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //start loopback on new device and stop all sounds playing
             if (loopbackWaveOut != null && loopbackSourceStream != null)
             {
-                restartLoopback();
+                RestartLoopback();
             }
 
-            stopPlayback();
+            StopPlayback();
 
             string deviceName = (string)cbPlaybackDevices1.SelectedItem;
 
-            initAudioPlaybackEngine1();
+            InitAudioPlaybackEngine1();
 
             XMLSettings.soundboardSettings.LastPlaybackDevice = deviceName;
-            saveSettings();
+            SaveSettings();
         }
 
-        private void cbPlaybackDevices2_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbPlaybackDevices2_SelectedIndexChanged(object sender, EventArgs e)
         {
             //start loopback on new device and stop all sounds playing
             if (loopbackWaveOut != null && loopbackSourceStream != null)
             {
-                restartLoopback();
+                RestartLoopback();
             }
                 
-            stopPlayback();
+            StopPlayback();
 
             string deviceName = (string)cbPlaybackDevices2.SelectedItem;
 
-            initAudioPlaybackEngine2();
+            InitAudioPlaybackEngine2();
 
             XMLSettings.soundboardSettings.LastPlaybackDevice2 = deviceName;
-            saveSettings();
+            SaveSettings();
         }
 
-        private void frmMain_Resize(object sender, EventArgs e)
+        private void FrmMain_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized && XMLSettings.soundboardSettings.MinimiseToTray)
             {
@@ -996,7 +998,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             this.ActiveControl = null;
         }
 
-        private void notifyIcon1_MouseUp(object sender, MouseEventArgs e)
+        private void NotifyIcon1_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -1040,7 +1042,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
 
         
         private bool cbEnableHotkeysWasChecked = false;
-        private void tbPushToTalkKey_Enter(object sender, EventArgs e)
+        private void TbPushToTalkKey_Enter(object sender, EventArgs e)
         {
             if (cbEnableHotkeys.Checked)
             {
@@ -1052,7 +1054,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             pushToTalkKeyTimer.Enabled = true;
         }
 
-        private void tbPushToTalkKey_Leave(object sender, EventArgs e)
+        private void TbPushToTalkKey_Leave(object sender, EventArgs e)
         {
             //only check enable hotkeys if it was previously checked before changing this field 
             if (cbEnableHotkeysWasChecked)
@@ -1065,10 +1067,10 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             pushToTalkKeyTimer.Interval = 100;
 
             XMLSettings.soundboardSettings.AutoPushToTalkKey = pushToTalkKey;
-            saveSettings();
+            SaveSettings();
         }
 
-        private void pushToTalkKeyTimer_Tick(object sender, EventArgs e)
+        private void PushToTalkKeyTimer_Tick(object sender, EventArgs e)
         {
             pushToTalkKeyTimer.Interval = 10; //lowering the interval to avoid missing key presses (e.g. when an input is corrected)
 
@@ -1092,7 +1094,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             }
         }
 
-        private void cbEnablePushToTalk_CheckedChanged(object sender, EventArgs e)
+        private void CbEnablePushToTalk_CheckedChanged(object sender, EventArgs e)
         {
             if (tbPushToTalkKey.Text == "")
             {
@@ -1106,42 +1108,42 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             clearHotkey.Enabled = !cbEnablePushToTalk.Checked;
 
             XMLSettings.soundboardSettings.EnableAutoPushToTalk = cbEnablePushToTalk.Checked;
-            saveSettings();
+            SaveSettings();
         }
 
-        private void cbWindows_Leave(object sender, EventArgs e)
+        private void CbWindows_Leave(object sender, EventArgs e)
         {
             SaveAutoPushToTalkWindow();
         }
 
-        private void btnReloadWindows_Click(object sender, EventArgs e)
+        private void BtnReloadWindows_Click(object sender, EventArgs e)
         {
-            Helper.getWindows(cbWindows);
+            Helper.GetWindows(cbWindows);
             SaveAutoPushToTalkWindow();
         }
 
         private void SaveAutoPushToTalkWindow() {
             XMLSettings.soundboardSettings.AutoPushToTalkWindow = cbWindows.SelectedIndex == 0 ? "" : cbWindows.Text;
-            saveSettings();
+            SaveSettings();
         }
 
-        private void clearHotkey_Click( object sender, EventArgs e )
+        private void ClearHotkey_Click( object sender, EventArgs e )
         {
             tbPushToTalkKey.Text = "";
 
-            XMLSettings.soundboardSettings.AutoPushToTalkKey = default(Keyboard.Keys);
-            saveSettings();
+            XMLSettings.soundboardSettings.AutoPushToTalkKey = default;
+            SaveSettings();
         }
 
 
         private bool volumeChangedBySlider = false;
         private bool volumeChangedByField = false;
-        public void vsSoundVolume_VolumeChanged(object sender, EventArgs e)
+        public void VsSoundVolume_VolumeChanged(object sender, EventArgs e)
         {
             soundVolume = vsSoundVolume.Volume;
 
             XMLSettings.soundboardSettings.SoundVolume = soundVolume;
-            saveSettings();
+            SaveSettings();
 
             //prevent infinite or skipped changes
             if (volumeChangedByField)
@@ -1153,15 +1155,15 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
 
             volumeChangedBySlider = true;
 
-            nSoundVolume.Value = Helper.linearVolumeToInteger(vsSoundVolume.Volume);
+            nSoundVolume.Value = Helper.LinearVolumeToInteger(vsSoundVolume.Volume);
         }
 
-        public void vsSoundVolume_MouseWheel(object sender, MouseEventArgs e)
+        public void VsSoundVolume_MouseWheel(object sender, MouseEventArgs e)
         {
-            vsSoundVolume.Volume = Helper.getNewSoundVolume(vsSoundVolume.Volume, e.Delta);
+            vsSoundVolume.Volume = Helper.GetNewSoundVolume(vsSoundVolume.Volume, e.Delta);
         }
 
-        public void nSoundVolume_ValueChanged(object sender, EventArgs e)
+        public void NSoundVolume_ValueChanged(object sender, EventArgs e)
         {
             //prevent infinite or skipped changes
             if (volumeChangedBySlider)
@@ -1176,20 +1178,20 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             vsSoundVolume.Volume = (float)(nSoundVolume.Value / 100);
         }
 
-        private void saveSettings()
+        private void SaveSettings()
         {
             saveSettingsTimer.Stop();
             saveSettingsTimer.Start();
         }
 
-        private void saveSettingsTimer_Tick(object sender, EventArgs e)
+        private void SaveSettingsTimer_Tick(object sender, EventArgs e)
         {
             //only save settings after no setting changes have been made for one second
             saveSettingsTimer.Stop();
             XMLSettings.SaveSoundboardSettingsXML();
         }
 
-        public void form_Click(object sender, EventArgs e)
+        public void Form_Click(object sender, EventArgs e)
         {
             //deselect all controls (to set values)
             this.ActiveControl = null;

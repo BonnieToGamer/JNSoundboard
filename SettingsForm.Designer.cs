@@ -66,8 +66,8 @@
             this.tbStopSoundKeys.ShortcutsEnabled = false;
             this.tbStopSoundKeys.Size = new System.Drawing.Size(213, 20);
             this.tbStopSoundKeys.TabIndex = 0;
-            this.tbStopSoundKeys.Enter += new System.EventHandler(this.tbStopSoundKeys_Enter);
-            this.tbStopSoundKeys.Leave += new System.EventHandler(this.tbStopSoundKeys_Leave);
+            this.tbStopSoundKeys.Enter += new System.EventHandler(this.TbStopSoundKeys_Enter);
+            this.tbStopSoundKeys.Leave += new System.EventHandler(this.TbStopSoundKeys_Leave);
             // 
             // lvKeysLocations
             // 
@@ -89,7 +89,7 @@
             this.lvKeysLocations.TabIndex = 3;
             this.lvKeysLocations.UseCompatibleStateImageBehavior = false;
             this.lvKeysLocations.View = System.Windows.Forms.View.Details;
-            this.lvKeysLocations.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvKeysLocations_MouseDoubleClick);
+            this.lvKeysLocations.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LvKeysLocations_MouseDoubleClick);
             // 
             // chKeys
             // 
@@ -111,7 +111,7 @@
             this.btnOK.TabIndex = 10;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
             // btnAdd
             // 
@@ -122,7 +122,7 @@
             this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // btnEdit
             // 
@@ -133,7 +133,7 @@
             this.btnEdit.TabIndex = 5;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // btnRemove
             // 
@@ -144,7 +144,7 @@
             this.btnRemove.TabIndex = 6;
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnRemove.Click += new System.EventHandler(this.BtnRemove_Click);
             // 
             // btnCancel
             // 
@@ -157,11 +157,11 @@
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // keysTimer
             // 
-            this.keysTimer.Tick += new System.EventHandler(this.keysTimer_Tick);
+            this.keysTimer.Tick += new System.EventHandler(this.KeysTimer_Tick);
             // 
             // gbKeysLocations
             // 
@@ -201,7 +201,7 @@
             this.clearHotkey.TabIndex = 1;
             this.clearHotkey.Text = "X";
             this.clearHotkey.UseVisualStyleBackColor = true;
-            this.clearHotkey.Click += new System.EventHandler(this.clearHotkey_Click);
+            this.clearHotkey.Click += new System.EventHandler(this.ClearHotkey_Click);
             // 
             // cbStartWithWindows
             // 

@@ -7,13 +7,9 @@ namespace JNSoundboard
 {
     public class Keyboard
     {
-        const int INPUT_MOUSE = 0;
         const int INPUT_KEYBOARD = 1;
-        const int INPUT_HARDWARE = 2;
         const uint KEYEVENTF_KEYDOWN = 0x0000;
-        const uint KEYEVENTF_EXTENDEDKEY = 0x0001;
         const uint KEYEVENTF_KEYUP = 0x0002;
-        const uint KEYEVENTF_UNICODE = 0x0004;
         const uint KEYEVENTF_SCANCODE = 0x0008;
 
         struct INPUT
@@ -82,7 +78,7 @@ namespace JNSoundboard
 
         const uint MAPVK_VK_TO_VSC = 0x00;
 
-        public static bool sendKey(Keys key, bool keyDown)
+        public static bool SendKey(Keys key, bool keyDown)
         {
             INPUT[] inputs =
             {
@@ -106,14 +102,14 @@ namespace JNSoundboard
             return SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT))) > 0;
         }
 
-        public static Tuple<int, string> getKeys(int lastAmountPressed, string currentKeys)
+        public static Tuple<int, string> GetKeys(int lastAmountPressed, string currentKeys)
         {
             int amountPressed = 0;
             string newKeys = (currentKeys == "") ? "" : currentKeys;
 
             if (!IsKeyDown(Keys.Escape))
             {
-                var pressedKeys = new List<Keys>();
+                List<Keys> pressedKeys = new List<Keys>();
 
                 foreach (Keys key in Enum.GetValues(typeof(Keys)))
                 {
@@ -126,7 +122,7 @@ namespace JNSoundboard
 
                 if (amountPressed > lastAmountPressed)
                 {
-                    newKeys = Helper.keysArrayToString(pressedKeys.ToArray());
+                    newKeys = Helper.KeysArrayToString(pressedKeys.ToArray());
                 }
 
                 lastAmountPressed = amountPressed;

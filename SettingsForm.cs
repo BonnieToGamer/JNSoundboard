@@ -30,15 +30,15 @@ namespace JNSoundboard
                     continue;
                 }
 
-                var item = new ListViewItem((keysLengthCorrect ? string.Join("+", loadXMLFilesList[i].Keys) : ""));
+                ListViewItem item = new ListViewItem((keysLengthCorrect ? string.Join("+", loadXMLFilesList[i].Keys) : ""));
                 item.SubItems.Add((xmlLocationUnempty ? xmlLocation : ""));
 
-                item.ToolTipText = Helper.getFileNamesTooltip(new string[] { xmlLocation });
+                item.ToolTipText = Helper.GetFileNamesTooltip(new string[] { xmlLocation });
 
                 lvKeysLocations.Items.Add(item);
             }
 
-            tbStopSoundKeys.Text = Helper.keysArrayToString(XMLSettings.soundboardSettings.StopSoundKeys);
+            tbStopSoundKeys.Text = Helper.KeysArrayToString(XMLSettings.soundboardSettings.StopSoundKeys);
 
             cbStartWithWindows.Checked = XMLSettings.soundboardSettings.StartWithWindows;
 
@@ -47,26 +47,27 @@ namespace JNSoundboard
             cbMinimiseToTray.Checked = XMLSettings.soundboardSettings.MinimiseToTray;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             addingEditingLoadXMLFile = true;
 
-            var form = new AddEditHotkeyForm();
+            AddEditHotkeyForm form = new AddEditHotkeyForm();
             form.ShowDialog();
 
             addingEditingLoadXMLFile = false;
         }
 
-        private void btnEdit_Click(object sender, EventArgs e)
+        private void BtnEdit_Click(object sender, EventArgs e)
         {
             if (lvKeysLocations.SelectedIndices.Count > 0)
             {
                 addingEditingLoadXMLFile = true;
 
-                var form = new AddEditHotkeyForm();
-
-                form.editIndex = lvKeysLocations.SelectedIndices[0];
-                form.editStrings = new string[] { lvKeysLocations.SelectedItems[0].Text, lvKeysLocations.SelectedItems[0].SubItems[1].Text };
+                AddEditHotkeyForm form = new AddEditHotkeyForm
+                {
+                    editIndex = lvKeysLocations.SelectedIndices[0],
+                    editStrings = new string[] { lvKeysLocations.SelectedItems[0].Text, lvKeysLocations.SelectedItems[0].SubItems[1].Text }
+                };
 
                 form.ShowDialog();
 
@@ -74,7 +75,7 @@ namespace JNSoundboard
             }
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
+        private void BtnRemove_Click(object sender, EventArgs e)
         {
             if (lvKeysLocations.SelectedIndices.Count > 0 && MessageBox.Show("Are you sure?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
@@ -85,9 +86,9 @@ namespace JNSoundboard
             }
         }
         
-        private void btnOK_Click(object sender, EventArgs e)
+        private void BtnOK_Click(object sender, EventArgs e)
         {
-            if (!Helper.stringToKeysArray(tbStopSoundKeys.Text, out Keyboard.Keys[] keysArray, out _)) keysArray = new Keyboard.Keys[] { };
+            if (!Helper.StringToKeysArray(tbStopSoundKeys.Text, out Keyboard.Keys[] keysArray, out _)) keysArray = new Keyboard.Keys[] { };
 
             if (loadXMLFilesList.Count == 0 || loadXMLFilesList.All(x => x.Keys.Length > 0 && !string.IsNullOrWhiteSpace(x.XMLLocation) && File.Exists(x.XMLLocation)))
             {
@@ -96,7 +97,7 @@ namespace JNSoundboard
                 XMLSettings.soundboardSettings.LoadXMLFiles = loadXMLFilesList.ToArray();
 
                 XMLSettings.soundboardSettings.StartWithWindows = cbStartWithWindows.Checked;
-                Helper.setStartup(XMLSettings.soundboardSettings.StartWithWindows);
+                Helper.SetStartup(XMLSettings.soundboardSettings.StartWithWindows);
 
                 XMLSettings.soundboardSettings.StartMinimised = cbStartMinimised.Checked;
 
@@ -112,22 +113,22 @@ namespace JNSoundboard
             }
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void lvKeysLocations_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void LvKeysLocations_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            btnEdit_Click(null, null);
+            BtnEdit_Click(null, null);
         }
 
-        private void tbStopSoundKeys_Enter(object sender, EventArgs e)
+        private void TbStopSoundKeys_Enter(object sender, EventArgs e)
         {
             keysTimer.Enabled = true;
         }
 
-        private void tbStopSoundKeys_Leave(object sender, EventArgs e)
+        private void TbStopSoundKeys_Leave(object sender, EventArgs e)
         {
             keysTimer.Enabled = false;
             keysTimer.Interval = 100;
@@ -135,17 +136,17 @@ namespace JNSoundboard
 
 
         private int lastAmountPressed = 0;
-        private void keysTimer_Tick(object sender, EventArgs e)
+        private void KeysTimer_Tick(object sender, EventArgs e)
         {
             keysTimer.Interval = 10; //lowering the interval to avoid missing key presses (e.g. when an input is corrected)
 
-            var keysData = Keyboard.getKeys(lastAmountPressed, tbStopSoundKeys.Text);
+            Tuple<int, string> keysData = Keyboard.GetKeys(lastAmountPressed, tbStopSoundKeys.Text);
 
             lastAmountPressed = keysData.Item1;
             tbStopSoundKeys.Text = keysData.Item2;
         }
 
-        private void clearHotkey_Click(object sender, EventArgs e)
+        private void ClearHotkey_Click(object sender, EventArgs e)
         {
             tbStopSoundKeys.Text = "";
         }

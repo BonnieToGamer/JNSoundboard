@@ -40,19 +40,21 @@ namespace JNSoundboard
 
             vsSoundVolume.Volume = lastSoundVolume;
 
-            Helper.getWindows(cbWindows);
-            Helper.selectWindow(cbWindows, lastWindow);
+            Helper.GetWindows(cbWindows);
+            Helper.SelectWindow(cbWindows, lastWindow);
         }
 
-        private void btnCreateWAV_Click(object sender, EventArgs e)
+        private void BtnCreateWAV_Click(object sender, EventArgs e)
         {
             string[] fileLocation;
 
             if (!string.IsNullOrWhiteSpace(tbText.Text))
             {
                 //show dialog
-                var diag = new SaveFileDialog();
-                diag.Filter = "WAV files|*.wav";
+                SaveFileDialog diag = new SaveFileDialog
+                {
+                    Filter = "WAV files|*.wav"
+                };
 
                 if (diag.ShowDialog() == DialogResult.OK)
                 {
@@ -84,22 +86,22 @@ namespace JNSoundboard
             if (cbAddToList.Checked)
             {
                 //add to list
-                if (!Helper.stringToKeysArray(tbKeys.Text, out Keyboard.Keys[] keysArray, out _)) keysArray = new Keyboard.Keys[] { };
+                if (!Helper.StringToKeysArray(tbKeys.Text, out Keyboard.Keys[] keysArray, out _)) keysArray = new Keyboard.Keys[] { };
 
                 string windowText = (cbWindows.SelectedIndex > 0) ? cbWindows.Text : "";
 
                 mainForm.soundHotkeys.Add(new XMLSettings.SoundHotkey(keysArray, vsSoundVolume.Volume, windowText, fileLocation));
 
-                var newItem = new ListViewItem(tbKeys.Text);
-                newItem.SubItems.Add(vsSoundVolume.Volume == 1 ? "" : Helper.linearVolumeToString(vsSoundVolume.Volume));
+                ListViewItem newItem = new ListViewItem(tbKeys.Text);
+                newItem.SubItems.Add(vsSoundVolume.Volume == 1 ? "" : Helper.LinearVolumeToString(vsSoundVolume.Volume));
                 newItem.SubItems.Add(windowText);
                 newItem.SubItems.Add(fileLocation[0]);
 
-                newItem.ToolTipText = Helper.getFileNamesTooltip(fileLocation);
+                newItem.ToolTipText = Helper.GetFileNamesTooltip(fileLocation);
 
                 mainForm.lvKeySounds.Items.Add(newItem);
 
-                mainForm.sortHotkeys();
+                mainForm.SortHotkeys();
 
                 //remember last used options
                 lastWindow = cbWindows.Text;
@@ -113,18 +115,18 @@ namespace JNSoundboard
             MessageBox.Show("Saved: " + fileLocation[0]);
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             if (previewPrompt != null) StopPreview();
             this.Close();
         }
 
-        private void tbKeys_Enter(object sender, EventArgs e)
+        private void TbKeys_Enter(object sender, EventArgs e)
         {
             keysTimer.Enabled = true;
         }
 
-        private void tbKeys_Leave(object sender, EventArgs e)
+        private void TbKeys_Leave(object sender, EventArgs e)
         {
             keysTimer.Enabled = false;
             keysTimer.Interval = 100;
@@ -132,22 +134,22 @@ namespace JNSoundboard
 
 
         int lastAmountPressed = 0;
-        private void keysTimer_Tick(object sender, EventArgs e)
+        private void KeysTimer_Tick(object sender, EventArgs e)
         {
             keysTimer.Interval = 10; //lowering the interval to avoid missing key presses (e.g. when an input is corrected)
 
-            var keysData = Keyboard.getKeys(lastAmountPressed, tbKeys.Text);
+            Tuple<int, string> keysData = Keyboard.GetKeys(lastAmountPressed, tbKeys.Text);
 
             lastAmountPressed = keysData.Item1;
             tbKeys.Text = keysData.Item2;
         }
 
-        private void clearHotkey_Click(object sender, EventArgs e)
+        private void ClearHotkey_Click(object sender, EventArgs e)
         {
             tbKeys.Text = "";
         }
 
-        private void preview_Click(object sender, EventArgs e)
+        private void Preview_Click(object sender, EventArgs e)
         {
             StopPreview();
 
@@ -158,12 +160,12 @@ namespace JNSoundboard
             }
         }
 
-        private void cbGender_SelectedIndexChanged(object sender, EventArgs e)
+        private void CbGender_SelectedIndexChanged(object sender, EventArgs e)
         {
             Gender = (VoiceGender)cbGender.SelectedIndex + 1; //1 = Male; 2 = Female
         }
 
-        private void stopPreview_Click(object sender, EventArgs e)
+        private void StopPreview_Click(object sender, EventArgs e)
         {
             StopPreview();
         }
@@ -173,12 +175,12 @@ namespace JNSoundboard
             if (synth.State == SynthesizerState.Speaking) synth.SpeakAsyncCancel(previewPrompt);
         }
 
-        private void btnReloadWindows_Click(object sender, EventArgs e)
+        private void BtnReloadWindows_Click(object sender, EventArgs e)
         {
-            Helper.getWindows(cbWindows);
+            Helper.GetWindows(cbWindows);
         }
 
-        private void cbAddToList_CheckedChanged(object sender, EventArgs e)
+        private void CbAddToList_CheckedChanged(object sender, EventArgs e)
         {
             tbKeys.Enabled = cbAddToList.Checked;
             clearHotkey.Enabled = cbAddToList.Checked;
@@ -191,7 +193,7 @@ namespace JNSoundboard
 
         private bool volumeChangedBySlider = false;
         private bool volumeChangedByField = false;
-        public void vsSoundVolume_VolumeChanged(object sender, EventArgs e)
+        public void VsSoundVolume_VolumeChanged(object sender, EventArgs e)
         {
             //prevent infinite or skipped changes
             if (volumeChangedByField)
@@ -203,15 +205,15 @@ namespace JNSoundboard
 
             volumeChangedBySlider = true;
 
-            nSoundVolume.Value = Helper.linearVolumeToInteger(vsSoundVolume.Volume);
+            nSoundVolume.Value = Helper.LinearVolumeToInteger(vsSoundVolume.Volume);
         }
 
-        public void vsSoundVolume_MouseWheel(object sender, MouseEventArgs e)
+        public void VsSoundVolume_MouseWheel(object sender, MouseEventArgs e)
         {
-            vsSoundVolume.Volume = Helper.getNewSoundVolume(vsSoundVolume.Volume, e.Delta);
+            vsSoundVolume.Volume = Helper.GetNewSoundVolume(vsSoundVolume.Volume, e.Delta);
         }
 
-        public void nSoundVolume_ValueChanged(object sender, EventArgs e)
+        public void NSoundVolume_ValueChanged(object sender, EventArgs e)
         {
             //prevent infinite or skipped changes
             if (volumeChangedBySlider)

@@ -17,14 +17,14 @@ namespace JNSoundboard
         [DllImport("user32.dll")]
         internal static extern IntPtr GetForegroundWindow();
 
-        internal static bool isForegroundWindow(string windowTitle)
+        internal static bool IsForegroundWindow(string windowTitle)
         {
             IntPtr foregroundWindow = GetForegroundWindow();
 
-            return isForegroundWindow(foregroundWindow, windowTitle);
+            return IsForegroundWindow(foregroundWindow, windowTitle);
         }
 
-        internal static bool isForegroundWindow(IntPtr foregroundWindow, string windowTitle)
+        internal static bool IsForegroundWindow(IntPtr foregroundWindow, string windowTitle)
         {
             IntPtr window = FindWindow(null, windowTitle);
 
@@ -33,13 +33,14 @@ namespace JNSoundboard
             return foregroundWindow == window;
         }
 
-        internal static string userGetXmlLocation()
+        internal static string UserGetXmlLocation()
         {
-            SaveFileDialog diag = new SaveFileDialog();
+            SaveFileDialog diag = new SaveFileDialog
+            {
+                Filter = "XML file containing keys and sounds|*.xml"
+            };
 
-            diag.Filter = "XML file containing keys and sounds|*.xml";
-
-            var result = diag.ShowDialog();
+            DialogResult result = diag.ShowDialog();
 
             if (result == DialogResult.OK)
             {
@@ -48,7 +49,7 @@ namespace JNSoundboard
             else return null;
         }
 
-        internal static bool stringToKey(string keyString, out Keyboard.Keys key)
+        internal static bool StringToKey(string keyString, out Keyboard.Keys key)
         {
             if (keyString.Contains("VK_"))
             {
@@ -78,7 +79,7 @@ namespace JNSoundboard
             }
         }
 
-        internal static string keysArrayToString(Keyboard.Keys[] keysArray)
+        internal static string KeysArrayToString(Keyboard.Keys[] keysArray)
         {
             if (keysArray == null) return "";
 
@@ -94,9 +95,9 @@ namespace JNSoundboard
             return keysString;
         }
 
-        internal static string[] keysArrayToStringArray(Keyboard.Keys[] keysArray)
+        internal static string[] KeysArrayToStringArray(Keyboard.Keys[] keysArray)
         {
-            var keysList = new List<string>();
+            List<string> keysList = new List<string>();
 
             foreach (Keyboard.Keys key in keysArray)
             {
@@ -106,18 +107,18 @@ namespace JNSoundboard
             return keysList.ToArray();
         }
 
-        internal static bool stringToKeysArray(string keysString, out Keyboard.Keys[] keysArray, out string errorMessage)
+        internal static bool StringToKeysArray(string keysString, out Keyboard.Keys[] keysArray, out string errorMessage)
         {
             errorMessage = "";
 
             if (keysString.Contains("+"))
             {
                 string[] stringArray = keysString.Split('+');
-                var keysList = new List<Keyboard.Keys>();
+                List<Keyboard.Keys> keysList = new List<Keyboard.Keys>();
 
                 foreach (string keyString in stringArray)
                 {
-                    if (stringToKey(keyString, out Keyboard.Keys key))
+                    if (StringToKey(keyString, out Keyboard.Keys key))
                     {
                         keysList.Add(key);
                     }
@@ -136,7 +137,7 @@ namespace JNSoundboard
             }
             else
             {
-                if (stringToKey(keysString, out Keyboard.Keys key))
+                if (StringToKey(keysString, out Keyboard.Keys key))
                 {
                     keysArray = new Keyboard.Keys[] { key };
                     
@@ -152,7 +153,7 @@ namespace JNSoundboard
             }
         }
 
-        internal static bool stringArrayToKeysArray(string[] stringArray, out Keyboard.Keys[] keysArray, out string errorMessage)
+        internal static bool StringArrayToKeysArray(string[] stringArray, out Keyboard.Keys[] keysArray, out string errorMessage)
         {
             errorMessage = "";
 
@@ -162,11 +163,11 @@ namespace JNSoundboard
                 return true;
             }
 
-            var keysList = new List<Keyboard.Keys>();
+            List<Keyboard.Keys> keysList = new List<Keyboard.Keys>();
 
             foreach (string keyString in stringArray)
             {
-                if (stringToKey(keyString, out Keyboard.Keys key))
+                if (StringToKey(keyString, out Keyboard.Keys key))
                 {
                     keysList.Add(key);
                 }
@@ -184,14 +185,14 @@ namespace JNSoundboard
             return true;
         }
 
-        internal static bool stringToFileLocationsArray(string fileLocationsString, out string[] fileLocations, out string errorMessage)
+        internal static bool StringToFileLocationsArray(string fileLocationsString, out string[] fileLocations, out string errorMessage)
         {
             errorMessage = "";
 
             if (fileLocationsString.Contains(";"))
             {
                 string[] sLocations = fileLocationsString.Split(';');
-                var lLocations = new List<string>();
+                List<string> lLocations = new List<string>();
 
                 for (int i = 0; i < sLocations.Length; i++)
                 {
@@ -226,7 +227,7 @@ namespace JNSoundboard
             }
         }
 
-        internal static string fileLocationsArrayToString(string[] fileLocations)
+        internal static string FileLocationsArrayToString(string[] fileLocations)
         {
             string temp = "";
             int sLength = fileLocations.Length;
@@ -239,7 +240,7 @@ namespace JNSoundboard
             return temp;
         }
 
-        internal static string getFileNamesTooltip(string[] fileLocations)
+        internal static string GetFileNamesTooltip(string[] fileLocations)
         {
             string soundNames = "";
 
@@ -251,12 +252,12 @@ namespace JNSoundboard
             return soundNames += Path.GetFileNameWithoutExtension(fileLocations[fileLocations.Length - 1]);
         }
 
-        internal static string cleanFileName(string fileName)
+        internal static string CleanFileName(string fileName)
         {
             return Path.GetInvalidFileNameChars().Aggregate(fileName, (current, c) => current.Replace(c.ToString(), ""));
         }
         
-        internal static void getWindows(ComboBox cbWindows)
+        internal static void GetWindows(ComboBox cbWindows)
         {
             string oldWindow = cbWindows.Text;
 
@@ -283,7 +284,7 @@ namespace JNSoundboard
             }
         }
 
-        internal static void selectWindow(ComboBox cbWindows, string windowToSelect)
+        internal static void SelectWindow(ComboBox cbWindows, string windowToSelect)
         {
             if (windowToSelect != "")
             {
@@ -303,7 +304,7 @@ namespace JNSoundboard
             }
         }
 
-        internal static void setStartup(bool StartWithWindows)
+        internal static void SetStartup(bool StartWithWindows)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
@@ -317,20 +318,20 @@ namespace JNSoundboard
             }
         }
 
-        internal static int linearVolumeToInteger(float linearVolume)
+        internal static int LinearVolumeToInteger(float linearVolume)
         {
             return linearVolume > 0.1 ? (int)Math.Round(linearVolume * 100) : (int)Math.Ceiling(linearVolume * 100);
         }
 
-        internal static string linearVolumeToString(float linearVolume)
+        internal static string LinearVolumeToString(float linearVolume)
         {
             double decibels = NAudio.Utils.Decibels.LinearToDecibels(linearVolume);
-            int linearInteger = linearVolumeToInteger(linearVolume);
+            int linearInteger = LinearVolumeToInteger(linearVolume);
 
             return string.Format("{0:N2} dB ({1})", decibels, linearInteger);
         }
 
-        internal static float getNewSoundVolume(float oldVolume, int delta)
+        internal static float GetNewSoundVolume(float oldVolume, int delta)
         {
             float[] increments = { 0, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1 };
 

@@ -104,13 +104,15 @@ namespace JNSoundboard
             {
                 using (StreamWriter stream = new StreamWriter(memStream, Encoding.Unicode))
                 {
-                    var settings = new XmlWriterSettings();
-                    settings.Indent = true;
-                    settings.OmitXmlDeclaration = true;
-
-                    using (var writer = XmlWriter.Create(stream, settings))
+                    XmlWriterSettings settings = new XmlWriterSettings
                     {
-                        var emptyNamepsaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+                        Indent = true,
+                        OmitXmlDeclaration = true
+                    };
+
+                    using (XmlWriter writer = XmlWriter.Create(stream, settings))
+                    {
+                        XmlSerializerNamespaces emptyNamepsaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
                         serializer.Serialize(writer, kl, emptyNamepsaces);
 
                         int count = (int)memStream.Length;
@@ -131,9 +133,9 @@ namespace JNSoundboard
 
         internal static object ReadXML(Type type, string xmlLocation)
         {
-            var serializer = new XmlSerializer(type);
+            XmlSerializer serializer = new XmlSerializer(type);
 
-            using (var reader = XmlReader.Create(xmlLocation))
+            using (XmlReader reader = XmlReader.Create(xmlLocation))
             {
                 if (serializer.CanDeserialize(reader))
                 {

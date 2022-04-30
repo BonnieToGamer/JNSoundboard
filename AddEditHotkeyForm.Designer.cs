@@ -58,8 +58,8 @@
             this.tbKeys.ShortcutsEnabled = false;
             this.tbKeys.Size = new System.Drawing.Size(213, 20);
             this.tbKeys.TabIndex = 2;
-            this.tbKeys.Enter += new System.EventHandler(this.tbKeys_Enter);
-            this.tbKeys.Leave += new System.EventHandler(this.tbKeys_Leave);
+            this.tbKeys.Enter += new System.EventHandler(this.TbKeys_Enter);
+            this.tbKeys.Leave += new System.EventHandler(this.TbKeys_Leave);
             // 
             // btnOK
             // 
@@ -71,7 +71,7 @@
             this.btnOK.TabIndex = 8;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            this.btnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
             // btnCancel
             // 
@@ -84,7 +84,7 @@
             this.btnCancel.TabIndex = 9;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // tbLocation
             // 
@@ -120,11 +120,11 @@
             this.btnBrowseSoundLocation.TabIndex = 1;
             this.btnBrowseSoundLocation.Text = "...";
             this.btnBrowseSoundLocation.UseVisualStyleBackColor = true;
-            this.btnBrowseSoundLocation.Click += new System.EventHandler(this.btnBrowseSoundLocation_Click);
+            this.btnBrowseSoundLocation.Click += new System.EventHandler(this.BtnBrowseSoundLocation_Click);
             // 
             // keysTimer
             // 
-            this.keysTimer.Tick += new System.EventHandler(this.keysTimer_Tick);
+            this.keysTimer.Tick += new System.EventHandler(this.KeysTimer_Tick);
             // 
             // btnReloadWindows
             // 
@@ -134,7 +134,7 @@
             this.btnReloadWindows.Size = new System.Drawing.Size(22, 23);
             this.btnReloadWindows.TabIndex = 7;
             this.btnReloadWindows.UseVisualStyleBackColor = true;
-            this.btnReloadWindows.Click += new System.EventHandler(this.btnReloadWindows_Click);
+            this.btnReloadWindows.Click += new System.EventHandler(this.BtnReloadWindows_Click);
             // 
             // cbWindows
             // 
@@ -156,7 +156,7 @@
             this.clearHotkey.TabIndex = 3;
             this.clearHotkey.Text = "X";
             this.clearHotkey.UseVisualStyleBackColor = true;
-            this.clearHotkey.Click += new System.EventHandler(this.clearHotkey_Click);
+            this.clearHotkey.Click += new System.EventHandler(this.ClearHotkey_Click);
             // 
             // pnAddEditSound
             // 
@@ -182,7 +182,7 @@
             0,
             0,
             0});
-            this.nSoundVolume.ValueChanged += new System.EventHandler(this.nSoundVolume_ValueChanged);
+            this.nSoundVolume.ValueChanged += new System.EventHandler(this.NSoundVolume_ValueChanged);
             // 
             // vsSoundVolume
             // 
@@ -191,8 +191,8 @@
             this.vsSoundVolume.Size = new System.Drawing.Size(213, 20);
             this.vsSoundVolume.TabIndex = 100;
             this.vsSoundVolume.TabStop = false;
-            this.vsSoundVolume.VolumeChanged += new System.EventHandler(this.vsSoundVolume_VolumeChanged);
-            this.vsSoundVolume.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.vsSoundVolume_MouseWheel);
+            this.vsSoundVolume.VolumeChanged += new System.EventHandler(this.VsSoundVolume_VolumeChanged);
+            this.vsSoundVolume.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.VsSoundVolume_MouseWheel);
             // 
             // label3
             // 

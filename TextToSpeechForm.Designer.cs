@@ -82,7 +82,7 @@
             this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // tbKeys
             // 
@@ -93,8 +93,8 @@
             this.tbKeys.ShortcutsEnabled = false;
             this.tbKeys.Size = new System.Drawing.Size(213, 20);
             this.tbKeys.TabIndex = 5;
-            this.tbKeys.Enter += new System.EventHandler(this.tbKeys_Enter);
-            this.tbKeys.Leave += new System.EventHandler(this.tbKeys_Leave);
+            this.tbKeys.Enter += new System.EventHandler(this.TbKeys_Enter);
+            this.tbKeys.Leave += new System.EventHandler(this.TbKeys_Leave);
             // 
             // label2
             // 
@@ -117,11 +117,11 @@
             this.btnCreateWAV.TabIndex = 10;
             this.btnCreateWAV.Text = "Create WAV";
             this.btnCreateWAV.UseVisualStyleBackColor = true;
-            this.btnCreateWAV.Click += new System.EventHandler(this.btnCreateWAV_Click);
+            this.btnCreateWAV.Click += new System.EventHandler(this.BtnCreateWAV_Click);
             // 
             // keysTimer
             // 
-            this.keysTimer.Tick += new System.EventHandler(this.keysTimer_Tick);
+            this.keysTimer.Tick += new System.EventHandler(this.KeysTimer_Tick);
             // 
             // clearHotkey
             // 
@@ -134,7 +134,7 @@
             this.clearHotkey.TabIndex = 6;
             this.clearHotkey.Text = "X";
             this.clearHotkey.UseVisualStyleBackColor = true;
-            this.clearHotkey.Click += new System.EventHandler(this.clearHotkey_Click);
+            this.clearHotkey.Click += new System.EventHandler(this.ClearHotkey_Click);
             // 
             // preview
             // 
@@ -146,7 +146,7 @@
             this.preview.TabIndex = 2;
             this.preview.Text = "Preview";
             this.preview.UseVisualStyleBackColor = true;
-            this.preview.Click += new System.EventHandler(this.preview_Click);
+            this.preview.Click += new System.EventHandler(this.Preview_Click);
             // 
             // cbGender
             // 
@@ -161,7 +161,7 @@
             this.cbGender.Name = "cbGender";
             this.cbGender.Size = new System.Drawing.Size(120, 21);
             this.cbGender.TabIndex = 1;
-            this.cbGender.SelectedIndexChanged += new System.EventHandler(this.cbGender_SelectedIndexChanged);
+            this.cbGender.SelectedIndexChanged += new System.EventHandler(this.CbGender_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -183,7 +183,7 @@
             this.stopPreview.TabIndex = 3;
             this.stopPreview.Text = "Stop";
             this.stopPreview.UseVisualStyleBackColor = true;
-            this.stopPreview.Click += new System.EventHandler(this.stopPreview_Click);
+            this.stopPreview.Click += new System.EventHandler(this.StopPreview_Click);
             // 
             // cbAddToList
             // 
@@ -196,7 +196,7 @@
             this.cbAddToList.TabIndex = 4;
             this.cbAddToList.Text = "Add to list";
             this.cbAddToList.UseVisualStyleBackColor = true;
-            this.cbAddToList.CheckedChanged += new System.EventHandler(this.cbAddToList_CheckedChanged);
+            this.cbAddToList.CheckedChanged += new System.EventHandler(this.CbAddToList_CheckedChanged);
             // 
             // btnReloadWindows
             // 
@@ -207,7 +207,7 @@
             this.btnReloadWindows.Size = new System.Drawing.Size(22, 23);
             this.btnReloadWindows.TabIndex = 9;
             this.btnReloadWindows.UseVisualStyleBackColor = true;
-            this.btnReloadWindows.Click += new System.EventHandler(this.btnReloadWindows_Click);
+            this.btnReloadWindows.Click += new System.EventHandler(this.BtnReloadWindows_Click);
             // 
             // cbWindows
             // 
@@ -239,8 +239,8 @@
             this.vsSoundVolume.Size = new System.Drawing.Size(213, 20);
             this.vsSoundVolume.TabIndex = 100;
             this.vsSoundVolume.TabStop = false;
-            this.vsSoundVolume.VolumeChanged += new System.EventHandler(this.vsSoundVolume_VolumeChanged);
-            this.vsSoundVolume.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.vsSoundVolume_MouseWheel);
+            this.vsSoundVolume.VolumeChanged += new System.EventHandler(this.VsSoundVolume_VolumeChanged);
+            this.vsSoundVolume.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.VsSoundVolume_MouseWheel);
             // 
             // nSoundVolume
             // 
@@ -254,7 +254,7 @@
             0,
             0,
             0});
-            this.nSoundVolume.ValueChanged += new System.EventHandler(this.nSoundVolume_ValueChanged);
+            this.nSoundVolume.ValueChanged += new System.EventHandler(this.NSoundVolume_ValueChanged);
             // 
             // label3
             // 

@@ -15,8 +15,8 @@ namespace JNSoundboard
 
         public int Read(float[] buffer, int offset, int count)
         {
-            var availableSamples = cachedSound.AudioData.Length - position;
-            var samplesToCopy = Math.Min(availableSamples, count);
+            long availableSamples = cachedSound.AudioData.Length - position;
+            long samplesToCopy = Math.Min(availableSamples, count);
 
             Array.Copy(cachedSound.AudioData, position, buffer, offset, samplesToCopy);
 

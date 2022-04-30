@@ -115,12 +115,12 @@
             this.cbEnableHotkeys.TabIndex = 16;
             this.cbEnableHotkeys.Text = "Enable Hotkeys";
             this.cbEnableHotkeys.UseVisualStyleBackColor = true;
-            this.cbEnableHotkeys.CheckedChanged += new System.EventHandler(this.cbEnableHotkeys_CheckedChanged);
+            this.cbEnableHotkeys.CheckedChanged += new System.EventHandler(this.CbEnableHotkeys_CheckedChanged);
             // 
             // mainTimer
             // 
             this.mainTimer.Interval = 50;
-            this.mainTimer.Tick += new System.EventHandler(this.mainTimer_Tick);
+            this.mainTimer.Tick += new System.EventHandler(this.MainTimer_Tick);
             // 
             // btnSave
             // 
@@ -132,7 +132,7 @@
             this.btnSave.TabIndex = 8;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // btnRemove
             // 
@@ -143,7 +143,7 @@
             this.btnRemove.TabIndex = 3;
             this.btnRemove.Text = "Remove";
             this.btnRemove.UseVisualStyleBackColor = true;
-            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnRemove.Click += new System.EventHandler(this.BtnRemove_Click);
             // 
             // btnEdit
             // 
@@ -154,7 +154,7 @@
             this.btnEdit.TabIndex = 2;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
-            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            this.btnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // btnAdd
             // 
@@ -165,7 +165,7 @@
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // lvKeySounds
             // 
@@ -189,7 +189,7 @@
             this.lvKeySounds.TabIndex = 0;
             this.lvKeySounds.UseCompatibleStateImageBehavior = false;
             this.lvKeySounds.View = System.Windows.Forms.View.Details;
-            this.lvKeySounds.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lvKeySounds_MouseDoubleClick);
+            this.lvKeySounds.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LvKeySounds_MouseDoubleClick);
             // 
             // chKeys
             // 
@@ -221,7 +221,7 @@
             this.btnLoad.TabIndex = 7;
             this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+            this.btnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
             // 
             // btnReloadDevices
             // 
@@ -232,7 +232,7 @@
             this.btnReloadDevices.Size = new System.Drawing.Size(23, 23);
             this.btnReloadDevices.TabIndex = 14;
             this.btnReloadDevices.UseVisualStyleBackColor = true;
-            this.btnReloadDevices.Click += new System.EventHandler(this.btnReloadDevices_Click);
+            this.btnReloadDevices.Click += new System.EventHandler(this.BtnReloadDevices_Click);
             // 
             // btnClear
             // 
@@ -243,7 +243,7 @@
             this.btnClear.TabIndex = 4;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClear.Click += new System.EventHandler(this.BtnClear_Click);
             // 
             // btnSaveAs
             // 
@@ -255,7 +255,7 @@
             this.btnSaveAs.TabIndex = 9;
             this.btnSaveAs.Text = "Save As";
             this.btnSaveAs.UseVisualStyleBackColor = true;
-            this.btnSaveAs.Click += new System.EventHandler(this.btnSaveAs_Click);
+            this.btnSaveAs.Click += new System.EventHandler(this.BtnSaveAs_Click);
             // 
             // menuStrip1
             // 
@@ -268,28 +268,28 @@
             this.menuStrip1.Size = new System.Drawing.Size(659, 24);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.Click += new System.EventHandler(this.form_Click);
+            this.menuStrip1.Click += new System.EventHandler(this.Form_Click);
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
             // texttospeechToolStripMenuItem
             // 
             this.texttospeechToolStripMenuItem.Name = "texttospeechToolStripMenuItem";
             this.texttospeechToolStripMenuItem.Size = new System.Drawing.Size(98, 20);
             this.texttospeechToolStripMenuItem.Text = "Text-to-speech";
-            this.texttospeechToolStripMenuItem.Click += new System.EventHandler(this.texttospeechToolStripMenuItem_Click);
+            this.texttospeechToolStripMenuItem.Click += new System.EventHandler(this.TexttospeechToolStripMenuItem_Click);
             // 
             // checkForUpdateToolStripMenuItem
             // 
             this.checkForUpdateToolStripMenuItem.Name = "checkForUpdateToolStripMenuItem";
             this.checkForUpdateToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
             this.checkForUpdateToolStripMenuItem.Text = "Check for update";
-            this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdateToolStripMenuItem_Click);
+            this.checkForUpdateToolStripMenuItem.Click += new System.EventHandler(this.CheckForUpdateToolStripMenuItem_Click);
             // 
             // lblLoopback
             // 
@@ -320,7 +320,7 @@
             this.btnPlaySelectedSound.TabIndex = 5;
             this.btnPlaySelectedSound.Text = "Play sound";
             this.btnPlaySelectedSound.UseVisualStyleBackColor = true;
-            this.btnPlaySelectedSound.Click += new System.EventHandler(this.btnPlaySound_Click);
+            this.btnPlaySelectedSound.Click += new System.EventHandler(this.BtnPlaySound_Click);
             // 
             // btnStopAllSounds
             // 
@@ -331,7 +331,7 @@
             this.btnStopAllSounds.TabIndex = 6;
             this.btnStopAllSounds.Text = "Stop all sounds";
             this.btnStopAllSounds.UseVisualStyleBackColor = true;
-            this.btnStopAllSounds.Click += new System.EventHandler(this.btnStopAllSounds_Click);
+            this.btnStopAllSounds.Click += new System.EventHandler(this.BtnStopAllSounds_Click);
             // 
             // notifyIcon1
             // 
@@ -341,7 +341,7 @@
             this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "JN Soundboard";
-            this.notifyIcon1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseUp);
+            this.notifyIcon1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseUp);
             // 
             // contextMenuStrip1
             // 
@@ -381,7 +381,7 @@
             this.gbPushToTalk.TabIndex = 19;
             this.gbPushToTalk.TabStop = false;
             this.gbPushToTalk.Text = "Auto activate push to talk";
-            this.gbPushToTalk.Click += new System.EventHandler(this.form_Click);
+            this.gbPushToTalk.Click += new System.EventHandler(this.Form_Click);
             // 
             // clearHotkey
             // 
@@ -394,7 +394,7 @@
             this.clearHotkey.TabIndex = 21;
             this.clearHotkey.Text = "X";
             this.clearHotkey.UseVisualStyleBackColor = true;
-            this.clearHotkey.Click += new System.EventHandler(this.clearHotkey_Click);
+            this.clearHotkey.Click += new System.EventHandler(this.ClearHotkey_Click);
             // 
             // btnReloadWindows
             // 
@@ -405,7 +405,7 @@
             this.btnReloadWindows.Size = new System.Drawing.Size(22, 23);
             this.btnReloadWindows.TabIndex = 23;
             this.btnReloadWindows.UseVisualStyleBackColor = true;
-            this.btnReloadWindows.Click += new System.EventHandler(this.btnReloadWindows_Click);
+            this.btnReloadWindows.Click += new System.EventHandler(this.BtnReloadWindows_Click);
             // 
             // cbEnablePushToTalk
             // 
@@ -417,7 +417,7 @@
             this.cbEnablePushToTalk.TabIndex = 24;
             this.cbEnablePushToTalk.Text = "Enable";
             this.cbEnablePushToTalk.UseVisualStyleBackColor = true;
-            this.cbEnablePushToTalk.CheckedChanged += new System.EventHandler(this.cbEnablePushToTalk_CheckedChanged);
+            this.cbEnablePushToTalk.CheckedChanged += new System.EventHandler(this.CbEnablePushToTalk_CheckedChanged);
             // 
             // label3
             // 
@@ -437,8 +437,8 @@
             this.tbPushToTalkKey.ShortcutsEnabled = false;
             this.tbPushToTalkKey.Size = new System.Drawing.Size(176, 20);
             this.tbPushToTalkKey.TabIndex = 20;
-            this.tbPushToTalkKey.Enter += new System.EventHandler(this.tbPushToTalkKey_Enter);
-            this.tbPushToTalkKey.Leave += new System.EventHandler(this.tbPushToTalkKey_Leave);
+            this.tbPushToTalkKey.Enter += new System.EventHandler(this.TbPushToTalkKey_Enter);
+            this.tbPushToTalkKey.Leave += new System.EventHandler(this.TbPushToTalkKey_Leave);
             // 
             // cbWindows
             // 
@@ -450,7 +450,7 @@
             this.cbWindows.Name = "cbWindows";
             this.cbWindows.Size = new System.Drawing.Size(176, 21);
             this.cbWindows.TabIndex = 22;
-            this.cbWindows.Leave += new System.EventHandler(this.cbWindows_Leave);
+            this.cbWindows.Leave += new System.EventHandler(this.CbWindows_Leave);
             // 
             // label4
             // 
@@ -479,7 +479,7 @@
             this.gbAudioDevices.TabIndex = 10;
             this.gbAudioDevices.TabStop = false;
             this.gbAudioDevices.Text = "Soundboard Audio devices";
-            this.gbAudioDevices.Click += new System.EventHandler(this.form_Click);
+            this.gbAudioDevices.Click += new System.EventHandler(this.Form_Click);
             // 
             // cbPlaybackDevices2
             // 
@@ -513,7 +513,7 @@
             // 
             // pushToTalkKeyTimer
             // 
-            this.pushToTalkKeyTimer.Tick += new System.EventHandler(this.pushToTalkKeyTimer_Tick);
+            this.pushToTalkKeyTimer.Tick += new System.EventHandler(this.PushToTalkKeyTimer_Tick);
             // 
             // cbEnableLoopback
             // 
@@ -525,7 +525,7 @@
             this.cbEnableLoopback.TabIndex = 17;
             this.cbEnableLoopback.Text = "Enable Loopback";
             this.cbEnableLoopback.UseVisualStyleBackColor = true;
-            this.cbEnableLoopback.CheckedChanged += new System.EventHandler(this.cbEnableLoopback_CheckedChanged);
+            this.cbEnableLoopback.CheckedChanged += new System.EventHandler(this.CbEnableLoopback_CheckedChanged);
             // 
             // vsSoundVolume
             // 
@@ -535,8 +535,8 @@
             this.vsSoundVolume.Size = new System.Drawing.Size(213, 20);
             this.vsSoundVolume.TabIndex = 100;
             this.vsSoundVolume.TabStop = false;
-            this.vsSoundVolume.VolumeChanged += new System.EventHandler(this.vsSoundVolume_VolumeChanged);
-            this.vsSoundVolume.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.vsSoundVolume_MouseWheel);
+            this.vsSoundVolume.VolumeChanged += new System.EventHandler(this.VsSoundVolume_VolumeChanged);
+            this.vsSoundVolume.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.VsSoundVolume_MouseWheel);
             // 
             // nSoundVolume
             // 
@@ -550,7 +550,7 @@
             0,
             0,
             0});
-            this.nSoundVolume.ValueChanged += new System.EventHandler(this.nSoundVolume_ValueChanged);
+            this.nSoundVolume.ValueChanged += new System.EventHandler(this.NSoundVolume_ValueChanged);
             // 
             // gbSoundboard
             // 
@@ -565,12 +565,12 @@
             this.gbSoundboard.TabIndex = 15;
             this.gbSoundboard.TabStop = false;
             this.gbSoundboard.Text = "Soundboard";
-            this.gbSoundboard.Click += new System.EventHandler(this.form_Click);
+            this.gbSoundboard.Click += new System.EventHandler(this.Form_Click);
             // 
             // saveSettingsTimer
             // 
             this.saveSettingsTimer.Interval = 1000;
-            this.saveSettingsTimer.Tick += new System.EventHandler(this.saveSettingsTimer_Tick);
+            this.saveSettingsTimer.Tick += new System.EventHandler(this.SaveSettingsTimer_Tick);
             // 
             // MainForm
             // 
@@ -597,8 +597,8 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "JN Soundboard";
-            this.Click += new System.EventHandler(this.form_Click);
-            this.Resize += new System.EventHandler(this.frmMain_Resize);
+            this.Click += new System.EventHandler(this.Form_Click);
+            this.Resize += new System.EventHandler(this.FrmMain_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);

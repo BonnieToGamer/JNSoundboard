@@ -57,15 +57,15 @@ namespace JNSoundboard
 
                 vsSoundVolume.Volume = (editIndex != -1) ? editVolume : lastSoundVolume;
 
-                Helper.getWindows(cbWindows);
+                Helper.GetWindows(cbWindows);
 
                 string windowToSelect = (editIndex != -1) ? editStrings[1] : lastWindow;
 
-                Helper.selectWindow(cbWindows, windowToSelect);
+                Helper.SelectWindow(cbWindows, windowToSelect);
             }
         }
 
-        private void btnOK_Click(object sender, EventArgs e)
+        private void BtnOK_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(tbLocation.Text))
             {
@@ -81,11 +81,10 @@ namespace JNSoundboard
 
             string[] soundLocations = null;
             string fileNames;
-            string errorMessage;
 
             if (!SettingsForm.addingEditingLoadXMLFile)
             {
-                if (Helper.stringToFileLocationsArray(tbLocation.Text, out soundLocations, out errorMessage))
+                if (Helper.StringToFileLocationsArray(tbLocation.Text, out soundLocations, out string errorMessage))
                 {
                     if (soundLocations.Any(x => string.IsNullOrWhiteSpace(x) || !File.Exists(x)))
                     {
@@ -104,11 +103,11 @@ namespace JNSoundboard
                 }
             }
 
-            if (!Helper.stringToKeysArray(tbKeys.Text, out Keyboard.Keys[] keysArray, out _)) keysArray = new Keyboard.Keys[] { };
+            if (!Helper.StringToKeysArray(tbKeys.Text, out Keyboard.Keys[] keysArray, out _)) keysArray = new Keyboard.Keys[] { };
 
             if (SettingsForm.addingEditingLoadXMLFile)
             {
-                fileNames = Helper.fileLocationsArrayToString(new string[] { tbLocation.Text });
+                fileNames = Helper.FileLocationsArrayToString(new string[] { tbLocation.Text });
 
                 if (editIndex != -1)
                 {
@@ -122,7 +121,7 @@ namespace JNSoundboard
                 }
                 else
                 {
-                    var item = new ListViewItem(tbKeys.Text);
+                    ListViewItem item = new ListViewItem(tbKeys.Text);
                     item.SubItems.Add(tbLocation.Text);
 
                     item.ToolTipText = fileNames;
@@ -134,9 +133,9 @@ namespace JNSoundboard
             }
             else
             {
-                fileNames = Helper.getFileNamesTooltip(soundLocations);
+                fileNames = Helper.GetFileNamesTooltip(soundLocations);
 
-                string volumeString = vsSoundVolume.Volume == 1 ? "" : Helper.linearVolumeToString(vsSoundVolume.Volume);
+                string volumeString = vsSoundVolume.Volume == 1 ? "" : Helper.LinearVolumeToString(vsSoundVolume.Volume);
 
                 string windowText = (cbWindows.SelectedIndex > 0) ? cbWindows.Text : "";
 
@@ -153,7 +152,7 @@ namespace JNSoundboard
                 }
                 else
                 {
-                    var newItem = new ListViewItem(tbKeys.Text);
+                    ListViewItem newItem = new ListViewItem(tbKeys.Text);
                     newItem.SubItems.Add(volumeString);
                     newItem.SubItems.Add(windowText);
                     newItem.SubItems.Add(tbLocation.Text);
@@ -165,7 +164,7 @@ namespace JNSoundboard
                     mainForm.soundHotkeys.Add(new XMLSettings.SoundHotkey(keysArray, vsSoundVolume.Volume, windowText, soundLocations));
                 }
 
-                mainForm.sortHotkeys();
+                mainForm.SortHotkeys();
 
                 //remember last used options
                 lastSoundVolume = vsSoundVolume.Volume;
@@ -175,20 +174,21 @@ namespace JNSoundboard
             this.Close();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void btnBrowseSoundLocation_Click(object sender, EventArgs e)
+        private void BtnBrowseSoundLocation_Click(object sender, EventArgs e)
         {
-            var diag = new OpenFileDialog();
+            OpenFileDialog diag = new OpenFileDialog
+            {
+                Multiselect = !SettingsForm.addingEditingLoadXMLFile,
 
-            diag.Multiselect = !SettingsForm.addingEditingLoadXMLFile;
+                Filter = (SettingsForm.addingEditingLoadXMLFile ? "XML file containing keys and sounds|*.xml" : "Supported audio formats|*.mp3;*.m4a;*.wav;*.wma;*.ac3;*.aiff;*.mp2|All files|*.*")
+            };
 
-            diag.Filter = (SettingsForm.addingEditingLoadXMLFile ? "XML file containing keys and sounds|*.xml" : "Supported audio formats|*.mp3;*.m4a;*.wav;*.wma;*.ac3;*.aiff;*.mp2|All files|*.*");
-
-            var result = diag.ShowDialog();
+            DialogResult result = diag.ShowDialog();
 
             if (result == DialogResult.OK)
             {
@@ -205,12 +205,12 @@ namespace JNSoundboard
             }
         }
 
-        private void tbKeys_Enter(object sender, EventArgs e)
+        private void TbKeys_Enter(object sender, EventArgs e)
         {
             keysTimer.Enabled = true;
         }
 
-        private void tbKeys_Leave(object sender, EventArgs e)
+        private void TbKeys_Leave(object sender, EventArgs e)
         {
             keysTimer.Enabled = false;
             keysTimer.Interval = 100;
@@ -218,22 +218,22 @@ namespace JNSoundboard
 
 
         private int lastAmountPressed = 0;
-        private void keysTimer_Tick(object sender, EventArgs e)
+        private void KeysTimer_Tick(object sender, EventArgs e)
         {
             keysTimer.Interval = 10; //lowering the interval to avoid missing key presses (e.g. when an input is corrected)
 
-            var keysData = Keyboard.getKeys(lastAmountPressed, tbKeys.Text);
+            Tuple<int, string> keysData = Keyboard.GetKeys(lastAmountPressed, tbKeys.Text);
 
             lastAmountPressed = keysData.Item1;
             tbKeys.Text = keysData.Item2;
         }
 
-        private void btnReloadWindows_Click(object sender, EventArgs e)
+        private void BtnReloadWindows_Click(object sender, EventArgs e)
         {
-            Helper.getWindows(cbWindows);
+            Helper.GetWindows(cbWindows);
         }
 
-        private void clearHotkey_Click( object sender, EventArgs e )
+        private void ClearHotkey_Click( object sender, EventArgs e )
         {
             tbKeys.Text = "";
         }
@@ -241,7 +241,7 @@ namespace JNSoundboard
 
         private bool volumeChangedBySlider = false;
         private bool volumeChangedByField = false;
-        public void vsSoundVolume_VolumeChanged(object sender, EventArgs e)
+        public void VsSoundVolume_VolumeChanged(object sender, EventArgs e)
         {
             //prevent infinite or skipped changes
             if (volumeChangedByField)
@@ -253,15 +253,15 @@ namespace JNSoundboard
 
             volumeChangedBySlider = true;
 
-            nSoundVolume.Value = Helper.linearVolumeToInteger(vsSoundVolume.Volume);
+            nSoundVolume.Value = Helper.LinearVolumeToInteger(vsSoundVolume.Volume);
         }
 
-        public void vsSoundVolume_MouseWheel(object sender, MouseEventArgs e)
+        public void VsSoundVolume_MouseWheel(object sender, MouseEventArgs e)
         {
-            vsSoundVolume.Volume = Helper.getNewSoundVolume(vsSoundVolume.Volume, e.Delta);
+            vsSoundVolume.Volume = Helper.GetNewSoundVolume(vsSoundVolume.Volume, e.Delta);
         }
 
-        public void nSoundVolume_ValueChanged(object sender, EventArgs e)
+        public void NSoundVolume_ValueChanged(object sender, EventArgs e)
         {
             //prevent infinite or skipped changes
             if (volumeChangedBySlider)

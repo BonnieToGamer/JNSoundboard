@@ -88,3 +88,8 @@ In Windows, a playback device is normally a set of speakers or headphones, but i
 * Adjusted/added some tooltips.
 * Fixed additional minor issues and inconsistencies.
 * Refactored some of the code.
+
+## BonnieToGamer's changes:
+* Fixed naming rule violations.
+* Removed the use of unexplicit variable types.
+* Added .gitignore.
