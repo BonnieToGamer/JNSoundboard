@@ -42,6 +42,7 @@
             this.chKeys = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chVolume = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chWindow = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chLocation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnLoad = new System.Windows.Forms.Button();
             this.btnReloadDevices = new System.Windows.Forms.Button();
@@ -77,7 +78,6 @@
             this.nSoundVolume = new System.Windows.Forms.NumericUpDown();
             this.gbSoundboard = new System.Windows.Forms.GroupBox();
             this.saveSettingsTimer = new System.Windows.Forms.Timer(this.components);
-            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.gbPushToTalk.SuspendLayout();
@@ -195,6 +195,7 @@
             // 
             // chKeys
             // 
+            this.chKeys.DisplayIndex = 2;
             this.chKeys.Text = "Keys";
             this.chKeys.Width = 100;
             // 
@@ -207,6 +208,12 @@
             // 
             this.chWindow.Text = "Window";
             this.chWindow.Width = 103;
+            // 
+            // chName
+            // 
+            this.chName.DisplayIndex = 0;
+            this.chName.Text = "Name";
+            this.chName.Width = 103;
             // 
             // chLocation
             // 
@@ -573,11 +580,6 @@
             // 
             this.saveSettingsTimer.Interval = 1000;
             this.saveSettingsTimer.Tick += new System.EventHandler(this.SaveSettingsTimer_Tick);
-            // 
-            // chName
-            // 
-            this.chName.Text = "Name";
-            this.chName.Width = 103;
             // 
             // MainForm
             // 

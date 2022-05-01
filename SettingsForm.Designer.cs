@@ -46,6 +46,7 @@
             this.clearHotkey = new System.Windows.Forms.Button();
             this.cbStartWithWindows = new System.Windows.Forms.CheckBox();
             this.cbStartMinimised = new System.Windows.Forms.CheckBox();
+            this.cbOverlapAudio = new System.Windows.Forms.CheckBox();
             this.gbKeysLocations.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,7 +105,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(288, 319);
+            this.btnOK.Location = new System.Drawing.Point(288, 336);
             this.btnOK.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -150,7 +151,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(369, 319);
+            this.btnCancel.Location = new System.Drawing.Point(369, 336);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -226,12 +227,24 @@
             this.cbStartMinimised.Text = "Start application minimised";
             this.cbStartMinimised.UseVisualStyleBackColor = true;
             // 
+            // cbOverlapAudio
+            // 
+            this.cbOverlapAudio.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cbOverlapAudio.AutoSize = true;
+            this.cbOverlapAudio.Location = new System.Drawing.Point(12, 312);
+            this.cbOverlapAudio.Name = "cbOverlapAudio";
+            this.cbOverlapAudio.Size = new System.Drawing.Size(92, 17);
+            this.cbOverlapAudio.TabIndex = 12;
+            this.cbOverlapAudio.Text = "Overlap audio";
+            this.cbOverlapAudio.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(456, 354);
+            this.ClientSize = new System.Drawing.Size(456, 371);
+            this.Controls.Add(this.cbOverlapAudio);
             this.Controls.Add(this.cbStartMinimised);
             this.Controls.Add(this.cbStartWithWindows);
             this.Controls.Add(this.clearHotkey);
@@ -271,5 +284,6 @@
         private System.Windows.Forms.Button clearHotkey;
         private System.Windows.Forms.CheckBox cbStartWithWindows;
         private System.Windows.Forms.CheckBox cbStartMinimised;
+        private System.Windows.Forms.CheckBox cbOverlapAudio;
     }
 }

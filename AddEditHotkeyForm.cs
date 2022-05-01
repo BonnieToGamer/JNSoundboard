@@ -147,7 +147,8 @@ namespace JNSoundboard
                     mainForm.lvKeySounds.Items[editIndex].SubItems[0].Text = tbKeys.Text;
                     mainForm.lvKeySounds.Items[editIndex].SubItems[1].Text = volumeString;
                     mainForm.lvKeySounds.Items[editIndex].SubItems[2].Text = windowText;
-                    mainForm.lvKeySounds.Items[editIndex].SubItems[3].Text = tbLocation.Text;
+                    mainForm.lvKeySounds.Items[editIndex].SubItems[3].Text = Path.GetFileNameWithoutExtension(tbLocation.Text);
+                    mainForm.lvKeySounds.Items[editIndex].SubItems[4].Text = tbLocation.Text;
 
                     mainForm.lvKeySounds.Items[editIndex].ToolTipText = fileNames;
 

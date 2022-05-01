@@ -103,6 +103,8 @@ namespace JNSoundboard
 
                 XMLSettings.soundboardSettings.MinimiseToTray = cbMinimiseToTray.Checked;
 
+                XMLSettings.soundboardSettings.OverlapAudio = cbOverlapAudio.Checked;
+
                 XMLSettings.SaveSoundboardSettingsXML();
 
                 this.Close();
