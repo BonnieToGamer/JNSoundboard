@@ -40,13 +40,13 @@ In Windows, a playback device is normally a set of speakers or headphones, but i
 
 ## Screenshots:
 
-![Main window](./Images/Main.png)
+![Main window](./images/Main.png)
 
-![Add/edit sound window](./Images/AddEditSound.png)
+![Add/edit sound window](./images/AddEditSound.png)
 
-![Settings window](./Images/Settings.png)
+![Settings window](./images/Settings.png)
 
-![Text-to-speech window](./Images/TTS.png)
+![Text-to-speech window](.images/TTS.png)
 
 ## EmbarassingUsername's changes:
 
