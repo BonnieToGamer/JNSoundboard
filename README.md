@@ -46,7 +46,7 @@ In Windows, a playback device is normally a set of speakers or headphones, but i
 
 ![Settings window](./images/Settings.png)
 
-![Text-to-speech window](.images/TTS.png)
+![Text-to-speech window](./images/TTS.png)
 
 ## EmbarassingUsername's changes:
 
