@@ -1,9 +1,12 @@
-﻿using System;
+﻿using MediaToolkit;
+using MediaToolkit.Model;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using VideoLibrary;
 
 namespace JNSoundboard
 {
@@ -46,7 +49,7 @@ namespace JNSoundboard
             {
                 mainForm = Application.OpenForms[0] as MainForm;
 
-                labelLocation.Text += "(s) (use ; to separate multiple locations)";
+                labelLocation.Text += "(s) \n(use ; to separate multiple locations)";
                 labelKeys.Text += " (optional)";
 
                 if (editIndex != -1)
@@ -86,9 +89,9 @@ namespace JNSoundboard
             {
                 if (Helper.StringToFileLocationsArray(tbLocation.Text, out soundLocations, out string errorMessage))
                 {
-                    if (soundLocations.Any(x => string.IsNullOrWhiteSpace(x) || !File.Exists(x)))
+                    if (soundLocations.Any(x => string.IsNullOrWhiteSpace(x) || (!File.Exists(x) && !x.Contains("http"))))
                     {
-                        MessageBox.Show("One or more files do not exist");
+                        MessageBox.Show("One or more files or URLs do not exist");
 
                         this.Close();
 

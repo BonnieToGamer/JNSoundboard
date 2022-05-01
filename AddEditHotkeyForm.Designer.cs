@@ -52,7 +52,7 @@
             // 
             // tbKeys
             // 
-            this.tbKeys.Location = new System.Drawing.Point(12, 69);
+            this.tbKeys.Location = new System.Drawing.Point(12, 84);
             this.tbKeys.Name = "tbKeys";
             this.tbKeys.ReadOnly = true;
             this.tbKeys.ShortcutsEnabled = false;
@@ -64,7 +64,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(114, 191);
+            this.btnOK.Location = new System.Drawing.Point(114, 206);
             this.btnOK.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -77,7 +77,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(195, 191);
+            this.btnCancel.Location = new System.Drawing.Point(195, 206);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -88,7 +88,7 @@
             // 
             // tbLocation
             // 
-            this.tbLocation.Location = new System.Drawing.Point(12, 25);
+            this.tbLocation.Location = new System.Drawing.Point(12, 40);
             this.tbLocation.Name = "tbLocation";
             this.tbLocation.Size = new System.Drawing.Size(213, 20);
             this.tbLocation.TabIndex = 0;
@@ -96,7 +96,7 @@
             // labelKeys
             // 
             this.labelKeys.AutoSize = true;
-            this.labelKeys.Location = new System.Drawing.Point(12, 53);
+            this.labelKeys.Location = new System.Drawing.Point(12, 68);
             this.labelKeys.Margin = new System.Windows.Forms.Padding(3, 5, 3, 0);
             this.labelKeys.Name = "labelKeys";
             this.labelKeys.Size = new System.Drawing.Size(30, 13);
@@ -108,13 +108,13 @@
             this.labelLocation.AutoSize = true;
             this.labelLocation.Location = new System.Drawing.Point(12, 9);
             this.labelLocation.Name = "labelLocation";
-            this.labelLocation.Size = new System.Drawing.Size(76, 13);
+            this.labelLocation.Size = new System.Drawing.Size(113, 13);
             this.labelLocation.TabIndex = 5;
-            this.labelLocation.Text = "Location of file";
+            this.labelLocation.Text = "Location of file or URL";
             // 
             // btnBrowseSoundLocation
             // 
-            this.btnBrowseSoundLocation.Location = new System.Drawing.Point(231, 24);
+            this.btnBrowseSoundLocation.Location = new System.Drawing.Point(231, 39);
             this.btnBrowseSoundLocation.Name = "btnBrowseSoundLocation";
             this.btnBrowseSoundLocation.Size = new System.Drawing.Size(24, 22);
             this.btnBrowseSoundLocation.TabIndex = 1;
@@ -150,7 +150,7 @@
             // 
             this.clearHotkey.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.clearHotkey.ForeColor = System.Drawing.Color.Red;
-            this.clearHotkey.Location = new System.Drawing.Point(231, 68);
+            this.clearHotkey.Location = new System.Drawing.Point(231, 83);
             this.clearHotkey.Name = "clearHotkey";
             this.clearHotkey.Size = new System.Drawing.Size(22, 22);
             this.clearHotkey.TabIndex = 3;
@@ -166,7 +166,7 @@
             this.pnAddEditSound.Controls.Add(this.label2);
             this.pnAddEditSound.Controls.Add(this.btnReloadWindows);
             this.pnAddEditSound.Controls.Add(this.cbWindows);
-            this.pnAddEditSound.Location = new System.Drawing.Point(12, 97);
+            this.pnAddEditSound.Location = new System.Drawing.Point(12, 112);
             this.pnAddEditSound.Name = "pnAddEditSound";
             this.pnAddEditSound.Size = new System.Drawing.Size(258, 81);
             this.pnAddEditSound.TabIndex = 4;
@@ -219,7 +219,7 @@
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 226);
+            this.ClientSize = new System.Drawing.Size(282, 236);
             this.Controls.Add(this.pnAddEditSound);
             this.Controls.Add(this.clearHotkey);
             this.Controls.Add(this.btnBrowseSoundLocation);

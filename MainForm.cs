@@ -902,7 +902,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                 {
                     temp = rand.Next(0, currentKeysSounds.SoundLocations.Length);
 
-                    if (temp != lastIndex && File.Exists(currentKeysSounds.SoundLocations[temp])) break;
+                    if (temp != lastIndex && (File.Exists(currentKeysSounds.SoundLocations[temp]) || currentKeysSounds.SoundLocations[temp].Contains("http"))) break;
                     Thread.Sleep(1);
                 }
 
@@ -913,7 +913,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
             else
                 path = currentKeysSounds.SoundLocations[0]; //get first sound
 
-            if (File.Exists(path))
+            if (File.Exists(path) || path.Contains("http"))
             {
                 float customSoundVolume = currentKeysSounds.SoundVolume;
 

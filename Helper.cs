@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using MediaToolkit;
+using MediaToolkit.Model;
 using Microsoft.Win32;
+using VideoLibrary;
 
 namespace JNSoundboard
 {
@@ -200,9 +205,17 @@ namespace JNSoundboard
                     {
                         lLocations.Add(sLocations[i]);
                     }
+
+                    else if (sLocations[i].Contains("http"))
+                    {
+                        string location = sLocations[i];
+                        
+                        lLocations.Add(GetYoutube(location));
+                    }
+
                     else
                     {
-                        errorMessage = "File \"" + sLocations[i] + "\" does not exist";
+                        errorMessage = "File or URL \"" + sLocations[i] + "\" does not exist";
                         fileLocations = null;
                         return false;
                     }
@@ -218,13 +231,60 @@ namespace JNSoundboard
                     fileLocations = new string[] { fileLocationsString };
                     return true;
                 }
+
+                else if (fileLocationsString.Contains("http"))
+                {
+                    string location = fileLocationsString;
+
+                    fileLocations = new string[] { GetYoutube(location) };
+                    return true;
+                }
+
                 else
                 {
-                    errorMessage = "File \"" + fileLocationsString + "\" does not exist";
+                    errorMessage = "File or URL \"" + fileLocationsString + "\" does not exist";
                     fileLocations = null;
                     return false;
                 }
             }
+        }
+
+        internal static string GetYoutube(string url)
+        {
+            // https://stackoverflow.com/a/39878726/16052290
+            Cursor.Current = Cursors.WaitCursor;
+
+            YouTube youtube = YouTube.Default;
+            YouTubeVideo vid = youtube.GetVideo(url);
+
+            // create yt directory if it doesn't exist
+            string source = Path.Combine(Directory.GetCurrentDirectory(), "yt");
+            if (!Directory.Exists(source))
+                Directory.CreateDirectory(source);
+
+            // write bytes to file
+            string path = Path.Combine(source, vid.FullName.Replace(".mp4", ""));
+            File.WriteAllBytes(path, vid.GetBytes());
+
+            url = $"{path}.wav";
+
+            // convert mp4 to wav
+            MediaFile inputFile = new MediaFile { Filename = path };
+            MediaFile outputFile = new MediaFile { Filename = url };
+
+            using (Engine engine = new Engine())
+            {
+                engine.GetMetadata(inputFile);
+                engine.Convert(inputFile, outputFile);
+            }
+
+            // delete mp4
+            File.Delete(path);
+
+            Cursor.Current = Cursors.AppStarting;
+
+            return url;
+
         }
 
         internal static string FileLocationsArrayToString(string[] fileLocations)
@@ -246,7 +306,7 @@ namespace JNSoundboard
 
             for (int i = 0; i < fileLocations.Length - 1; i++)
             {
-                soundNames += Path.GetFileNameWithoutExtension(fileLocations[i]) + "\n";
+                soundNames += (!fileLocations[i].Contains("http")) ? Path.GetFileNameWithoutExtension(fileLocations[i]) + "\n" : fileLocations[i] + "\n";
             }
 
             return soundNames += Path.GetFileNameWithoutExtension(fileLocations[fileLocations.Length - 1]);
