@@ -509,6 +509,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                         ListViewItem temp = new ListViewItem(keys);
                         temp.SubItems.Add(volumeString);
                         temp.SubItems.Add(windowString);
+                        temp.SubItems.Add(Path.GetFileNameWithoutExtension(soundLocations));
                         temp.SubItems.Add(soundLocations);
 
                         temp.ToolTipText = Helper.GetFileNamesTooltip(s.SoundHotkeys[i].SoundLocations); //blank tooltips are not displayed

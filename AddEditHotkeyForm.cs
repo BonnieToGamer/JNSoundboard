@@ -153,11 +153,15 @@ namespace JNSoundboard
 
                     mainForm.soundHotkeys[editIndex] = new XMLSettings.SoundHotkey(keysArray, vsSoundVolume.Volume, windowText, soundLocations);
                 }
+
                 else
                 {
+                    string title = tbLocation.Text.Contains("http") ? Helper.youTube.GetVideo(tbLocation.Text).Title : Path.GetFileName(tbLocation.Text);
+
                     ListViewItem newItem = new ListViewItem(tbKeys.Text);
                     newItem.SubItems.Add(volumeString);
                     newItem.SubItems.Add(windowText);
+                    newItem.SubItems.Add(title);
                     newItem.SubItems.Add(tbLocation.Text);
 
                     newItem.ToolTipText = fileNames;

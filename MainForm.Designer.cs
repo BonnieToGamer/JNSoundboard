@@ -77,6 +77,7 @@
             this.nSoundVolume = new System.Windows.Forms.NumericUpDown();
             this.gbSoundboard = new System.Windows.Forms.GroupBox();
             this.saveSettingsTimer = new System.Windows.Forms.Timer(this.components);
+            this.chName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.gbPushToTalk.SuspendLayout();
@@ -177,6 +178,7 @@
             this.chKeys,
             this.chVolume,
             this.chWindow,
+            this.chName,
             this.chLocation});
             this.lvKeySounds.FullRowSelect = true;
             this.lvKeySounds.GridLines = true;
@@ -204,7 +206,7 @@
             // chWindow
             // 
             this.chWindow.Text = "Window";
-            this.chWindow.Width = 100;
+            this.chWindow.Width = 103;
             // 
             // chLocation
             // 
@@ -572,6 +574,11 @@
             this.saveSettingsTimer.Interval = 1000;
             this.saveSettingsTimer.Tick += new System.EventHandler(this.SaveSettingsTimer_Tick);
             // 
+            // chName
+            // 
+            this.chName.Text = "Name";
+            this.chName.Width = 103;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -663,6 +670,7 @@
         private System.Windows.Forms.GroupBox gbSoundboard;
         private System.Windows.Forms.Timer saveSettingsTimer;
         internal System.Windows.Forms.ColumnHeader chVolume;
+        internal System.Windows.Forms.ColumnHeader chName;
     }
 }
 

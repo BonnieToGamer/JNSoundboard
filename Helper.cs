@@ -249,13 +249,14 @@ namespace JNSoundboard
             }
         }
 
+        internal static YouTube youTube = YouTube.Default;
+
         internal static string GetYoutube(string url)
         {
             // https://stackoverflow.com/a/39878726/16052290
             Cursor.Current = Cursors.WaitCursor;
 
-            YouTube youtube = YouTube.Default;
-            YouTubeVideo vid = youtube.GetVideo(url);
+            YouTubeVideo vid = youTube.GetVideo(url);
 
             // create yt directory if it doesn't exist
             string source = Path.Combine(Directory.GetCurrentDirectory(), "yt");

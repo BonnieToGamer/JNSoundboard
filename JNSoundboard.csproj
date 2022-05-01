@@ -240,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <None Include="CHANGELOG.md" />
     <Content Include="Images\AddEditSound.png" />
     <Content Include="Images\Main.png" />
     <Content Include="Images\Settings.png" />
