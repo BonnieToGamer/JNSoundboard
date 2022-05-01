@@ -939,6 +939,7 @@ Doesn't affect sounds with custom volumes or that are currently playing.";
                 showingMsgBox = false;
             }
         }
+      
 
         private void CbLoopbackDevices_SelectedIndexChanged(object sender, EventArgs e)
         {

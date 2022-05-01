@@ -105,7 +105,7 @@
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Location = new System.Drawing.Point(288, 336);
+            this.btnOK.Location = new System.Drawing.Point(288, 353);
             this.btnOK.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -151,7 +151,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(369, 336);
+            this.btnCancel.Location = new System.Drawing.Point(369, 353);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -243,7 +243,7 @@
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(456, 371);
+            this.ClientSize = new System.Drawing.Size(456, 388);
             this.Controls.Add(this.cbOverlapAudio);
             this.Controls.Add(this.cbStartMinimised);
             this.Controls.Add(this.cbStartWithWindows);
@@ -256,7 +256,7 @@
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(472, 393);
+            this.MinimumSize = new System.Drawing.Size(472, 376);
             this.Name = "SettingsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Soundboard Settings";

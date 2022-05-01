@@ -163,7 +163,7 @@ namespace JNSoundboard
                     newItem.SubItems.Add(volumeString);
                     newItem.SubItems.Add(windowText);
                     newItem.SubItems.Add(title);
-                    newItem.SubItems.Add(tbLocation.Text);
+                    newItem.SubItems.Add(Path.Combine(Directory.GetCurrentDirectory(), "yt", title + ".wav"));
 
                     newItem.ToolTipText = fileNames;
 
